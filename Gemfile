@@ -17,12 +17,6 @@ gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem "rack-cors"
 gem "rails", "~> 8.0.1"
-# gem "ruby-openai"
-gem "ruby-vips"
-gem "searchkick"
-gem "shrine"
-gem "sidekiq"
-# gem "streamio-ffmpeg"
 
 group :development do
   gem "annotate"
