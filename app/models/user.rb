@@ -8,7 +8,9 @@ class User < ApplicationRecord
     presence: true
   validates :email,
     presence: true,
-    length: { maximum: 255 }
+    length: { maximum: 255 },
+    uniqueness: { case_sensitive: true },
+    format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password_digest,
             presence: true
   validates :slug,
