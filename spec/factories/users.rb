@@ -6,6 +6,5 @@ FactoryBot.define do
     email { FFaker::Internet.email }
     password { "testing" }
     password_confirmation { "testing" }
-    slug { FriendlyIdGenerator }
   end
 end

@@ -7,6 +7,12 @@ RSpec.describe User do
     it { is_expected.to allow_value("John").for(:name) }
     it { is_expected.not_to allow_value(nil).for(:name) }
     it { is_expected.not_to allow_value("A" * 31).for(:name) }
-    it { is_expected.to validate_presence_of(:slug) }
+  end
+
+  describe '#slug' do
+    it 'generates a slug' do
+      instance = create(:user)
+      expect(instance.slug).to be_present
+    end
   end
 end

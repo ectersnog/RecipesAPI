@@ -3,17 +3,13 @@
 class User < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
+  has_secure_password
+
   validates :name,
     length: { maximum: 30 },
     presence: true
   validates :email,
-    presence: true,
     length: { maximum: 255 },
-    uniqueness: { case_sensitive: true },
+    uniqueness: true,
     format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :password_digest,
-            presence: true
-  validates :slug,
-            presence: true,
-            allow_nil: false
 end
