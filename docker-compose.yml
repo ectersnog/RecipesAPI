@@ -1,0 +1,77 @@
+services:
+  web:
+    tty: true
+    stdin_open: true
+    build: .
+    entrypoint: ./bin/docker-entrypoint
+    command: sh -c "bin/rails s -p ${DOCKER_WEB_PORT:-3400} -b '0.0.0.0'"
+    volumes:
+      - .:/app
+      - bundle:/RecipesAPI/usr/local/bundle
+      - /RecipesAPI/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "${DOCKER_WEB_PORT:-3400}:3400"
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgres://RecipesAPI:RecipesAPI@db:5432/RecipesAPI
+      - ENABLE_BOOTSNAP=false
+
+  redis:
+    image: redis:7.2.5
+    restart: always
+    command: redis-server
+    ports:
+      - "${DOCKER_REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli PING"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - redis_data:/RecipesAPI/var/lib/redis/data
+  db:
+    image: postgres:16.3
+    environment:
+      POSTGRES_DB: RecipesAPI
+      POSTGRES_PASSWORD: RecipesAPI
+      POSTGRES_USER: RecipesAPI
+    ports:
+      - "${DOCKER_DB_PORT:-5432}:5432"
+    expose:
+      - "${DOCKER_DB_PORT:-5432}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U RecipesAPI -d RecipesAPI"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - pg_data:/RecipesAPI/var/lib/postgresql/data
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.3
+    environment:
+      - node.name=RecipesAPI-es
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch_data:/RecipesAPI/elasticsearch/data
+    ports:
+      - "${DOCKER_ELASTIC_PORT:-9200}:${DOCKER_ELASTIC_PORT-9200}"
+
+volumes:
+  bundle:
+  elasticsearch_data:
+  pg_data:
+  redis_data:
