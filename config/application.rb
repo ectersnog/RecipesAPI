@@ -14,7 +14,7 @@ require 'action_view/railtie'
 Bundler.require(*Rails.groups)
 
 # Load .env file for development and test environments
-if Rails.env.development? || Rails.env.test?
+if Rails.env.local?
   Dotenv::Rails.load
 end
 
