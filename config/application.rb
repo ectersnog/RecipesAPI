@@ -13,11 +13,6 @@ require 'action_view/railtie'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# Load .env file for development and test environments
-if Rails.env.local?
-  Dotenv::Rails.load
-end
-
 module RecipesAPI
   class Application < Rails::Application
     config.load_defaults 8.0
