@@ -5,7 +5,7 @@ class CreateCategories < ActiveRecord::Migration[8.0]
     create_table :categories, id: :uuid do |t|
       t.string :name, null: false
       t.string :slug, null: false
-      t.references :parent, null: true, foreign_key: { to_table: :categories, index: false }, type: :uuid
+      t.references :parent, null: true, foreign_key: { to_table: :categories }, type: :uuid, index: false
       t.timestamps
     end
 
