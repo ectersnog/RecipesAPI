@@ -6,11 +6,9 @@ class Recipe < ApplicationRecord
   friendly_id :name, use: :slugged
 
   validates :name,
+    length: { maximum: 100 },
     presence: true
-  validates :is_gluten_free, inclusion: { in: [true, false] }
-  validates :is_carb_free, inclusion: { in: [true, false] }
-  validates :is_kosher, inclusion: { in: [true, false] }
-  validates :is_paleo, inclusion: { in: [true, false] }
-  validates :is_vegetarian, inclusion: { in: [true, false] }
-  validates :is_vegan, inclusion: { in: [true, false] }
+  validates :is_gluten_free, :is_carb_free, :is_kosher,
+    :is_paleo, :is_vegetarian, :is_vegan,
+    inclusion: { in: [true, false] }
 end

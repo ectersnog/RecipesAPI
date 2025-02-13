@@ -19,7 +19,6 @@ class CreateRecipes < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :recipes, :name, unique: true
     add_index :recipes, :slug, unique: true
   end
 end
