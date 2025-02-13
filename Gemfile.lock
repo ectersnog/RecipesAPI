@@ -227,6 +227,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.2-arm-linux-musl)
       racc (~> 1.4)
+    nokogiri (1.18.2-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.18.2-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.18.2-x86_64-linux-gnu)
@@ -391,6 +393,7 @@ PLATFORMS
   aarch64-linux-musl
   arm-linux-gnu
   arm-linux-musl
+  arm64-darwin-24
   x86_64-darwin-22
   x86_64-linux
   x86_64-linux-gnu

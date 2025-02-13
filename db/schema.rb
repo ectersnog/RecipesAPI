@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_25_004342) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_12_032953) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -35,6 +35,36 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_25_004342) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "ingredients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.json "nutritional_info", default: {}
+    t.string "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "recipes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "user_id"
+    t.bigint "{null: false, foreign_key: true, type: :uuid}_id"
+    t.json "nutritional_info", default: {}
+    t.text "description"
+    t.text "steps", default: [], array: true
+    t.boolean "is_gluten_free", default: false, null: false
+    t.boolean "is_carb_free", default: false, null: false
+    t.boolean "is_kosher", default: false, null: false
+    t.boolean "is_paleo", default: false, null: false
+    t.boolean "is_vegetarian", default: false, null: false
+    t.boolean "is_vegan", default: false, null: false
+    t.string "slug", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_recipes_on_name", unique: true
+    t.index ["slug"], name: "index_recipes_on_slug", unique: true
+    t.index ["user_id"], name: "index_recipes_on_user_id"
+    t.index ["{null: false, foreign_key: true, type: :uuid}_id"], name: "idx_on_{null: false, foreign_key: true, type: :uuid_d0faee67c1"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
