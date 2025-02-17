@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_12_032953) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_16_193645) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -40,9 +40,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_032953) do
   create_table "ingredients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.json "nutritional_info", default: {}
-    t.string "slug"
+    t.string "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_ingredients_on_slug", unique: true
   end
 
   create_table "recipes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -61,7 +62,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_032953) do
     t.string "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_recipes_on_name", unique: true
     t.index ["slug"], name: "index_recipes_on_slug", unique: true
     t.index ["user_id"], name: "index_recipes_on_user_id"
     t.index ["{null: false, foreign_key: true, type: :uuid}_id"], name: "idx_on_{null: false, foreign_key: true, type: :uuid_d0faee67c1"
