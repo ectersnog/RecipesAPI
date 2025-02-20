@@ -26,13 +26,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_193831) do
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
 
-  create_table "categories_recipes", id: false, force: :cascade do |t|
-    t.bigint "recipe_id", null: false
-    t.bigint "category_id", null: false
-    t.index ["category_id"], name: "index_categories_recipes_on_category_id"
-    t.index ["recipe_id"], name: "index_categories_recipes_on_recipe_id"
-  end
-
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -83,15 +76,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_193831) do
     t.index ["{null: false, foreign_key: true, type: :uuid}_id"], name: "idx_on_{null: false, foreign_key: true, type: :uuid_d0faee67c1"
   end
 
-  create_table "recipes_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "recipe_id", null: false
-    t.uuid "category_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_recipes_categories_on_category_id"
-    t.index ["recipe_id"], name: "index_recipes_categories_on_recipe_id"
-  end
-
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.citext "email", null: false
@@ -107,6 +91,4 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_193831) do
   add_foreign_key "categories", "categories", column: "parent_id"
   add_foreign_key "recipe_categories", "categories"
   add_foreign_key "recipe_categories", "recipes"
-  add_foreign_key "recipes_categories", "categories"
-  add_foreign_key "recipes_categories", "recipes"
 end

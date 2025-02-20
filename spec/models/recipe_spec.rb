@@ -16,6 +16,17 @@ RSpec.describe Recipe do
     end
   end
 
+  describe 'RecipeCategory associations' do
+    it 'can have many categories' do
+      recipe = create(:recipe)
+      3.times do
+        category = create(:category)
+        recipe.categories << category
+      end
+      expect(recipe.categories.count).to eq(3)
+    end
+  end
+
   describe '#slug' do
     it 'generates a slug' do
       recipe = create(:recipe)
