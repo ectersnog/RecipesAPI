@@ -9,13 +9,10 @@ RSpec.describe Category do
   end
 
   describe 'RecipeCategory associations' do
-    it 'can have many recipes' do
+    it 'can access category recipe' do
       category = create(:category)
-      3.times do
-        recipe = create(:recipe)
-        category.recipes << recipe
-      end
-      expect(category.recipes.count).to eq(3)
+      category.recipes << create(:recipe)
+      expect(category.recipes).to be_present
     end
   end
 

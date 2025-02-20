@@ -52,6 +52,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_193831) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_recipe_categories_on_category_id"
+    t.index ["recipe_id", "category_id"], name: "index_recipe_categories_on_recipe_id_and_category_id", unique: true
     t.index ["recipe_id"], name: "index_recipe_categories_on_recipe_id"
   end
 

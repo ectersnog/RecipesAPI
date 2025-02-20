@@ -3,4 +3,9 @@
 class RecipeCategory < ApplicationRecord
   belongs_to :recipe
   belongs_to :category
+
+  validates :recipe,
+    uniqueness: { scope: :category_id }
+  validates :category,
+    uniqueness: { scope: :recipe_id }
 end
