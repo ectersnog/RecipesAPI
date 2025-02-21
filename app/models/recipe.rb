@@ -5,6 +5,11 @@ class Recipe < ApplicationRecord
 
   friendly_id :name, use: :slugged
 
+  has_many :recipe_categories,
+    dependent: :destroy
+  has_many :categories,
+    through: :recipe_categories
+
   validates :name,
     length: { maximum: 100 },
     presence: true

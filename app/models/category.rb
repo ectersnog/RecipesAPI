@@ -9,6 +9,10 @@ class Category < ApplicationRecord
     class_name: 'Category',
     foreign_key: :parent_id,
     dependent: :destroy
+  has_many :recipe_categories,
+    dependent: :destroy
+  has_many :recipes,
+    through: :recipe_categories
   belongs_to :parent,
     class_name: 'Category',
     optional: true

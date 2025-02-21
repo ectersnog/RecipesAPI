@@ -16,6 +16,11 @@ RSpec.describe Recipe do
     end
   end
 
+  describe 'associations' do
+    it { is_expected.to have_many(:recipe_categories) }
+    it { is_expected.to have_many(:categories).through(:recipe_categories) }
+  end
+
   describe '#slug' do
     it 'generates a slug' do
       recipe = create(:recipe)

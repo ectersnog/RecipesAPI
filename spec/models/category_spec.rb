@@ -8,6 +8,11 @@ RSpec.describe Category do
     it { is_expected.not_to allow_value(nil).for(:name) }
   end
 
+  describe 'associations' do
+    it { is_expected.to have_many(:recipe_categories) }
+    it { is_expected.to have_many(:recipes).through(:recipe_categories) }
+  end
+
   describe '#slug' do
     it 'generates a slug' do
       instance = create(:category)
