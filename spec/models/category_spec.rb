@@ -8,12 +8,9 @@ RSpec.describe Category do
     it { is_expected.not_to allow_value(nil).for(:name) }
   end
 
-  describe 'RecipeCategory associations' do
-    it 'can access category recipe' do
-      category = create(:category)
-      category.recipes << create(:recipe)
-      expect(category.recipes).to be_present
-    end
+  describe 'associations' do
+    it { is_expected.to have_many(:recipe_categories) }
+    it { is_expected.to have_many(:recipes).through(:recipe_categories) }
   end
 
   describe '#slug' do

@@ -7,9 +7,8 @@ RSpec.describe RecipeCategory do
     expect(create(:recipe_category)).to be_valid
   end
 
-  it "belongs to a recipe and a category" do
-    recipe_category = create(:recipe_category)
-    expect(recipe_category.recipe).to be_a(Recipe)
-    expect(recipe_category.category).to be_a(Category)
+  describe 'associations' do
+    it { is_expected.to belong_to(:recipe) }
+    it { is_expected.to belong_to(:category) }
   end
 end

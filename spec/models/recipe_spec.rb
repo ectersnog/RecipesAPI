@@ -16,12 +16,9 @@ RSpec.describe Recipe do
     end
   end
 
-  describe 'RecipeCategory associations' do
-    it 'can access recipe category' do
-      recipe = create(:recipe)
-      recipe.categories << create(:category)
-      expect(recipe.categories).to be_present
-    end
+  describe 'associations' do
+    it { is_expected.to have_many(:recipe_categories) }
+    it { is_expected.to have_many(:categories).through(:recipe_categories) }
   end
 
   describe '#slug' do

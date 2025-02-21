@@ -6,6 +6,4 @@ class RecipeCategory < ApplicationRecord
 
   validates :recipe,
     uniqueness: { scope: :category_id }
-  validates :category,
-    uniqueness: { scope: :recipe_id }
 end
