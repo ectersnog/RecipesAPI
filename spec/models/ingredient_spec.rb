@@ -8,7 +8,12 @@ RSpec.describe Ingredient do
     it { is_expected.not_to allow_value(nil).for(:name) }
   end
 
-  describe "#slug" do
+  describe 'associations' do
+    it { is_expected.to have_many(:recipe_ingredients) }
+    it { is_expected.to have_many(:recipes).through(:recipe_ingredients) }
+  end
+
+  describe '#slug' do
     it 'generates a slug' do
       instance = create(:ingredient)
       expect(instance.slug).to be_present
