@@ -22,6 +22,6 @@ class RecipeIngredient < ApplicationRecord
 
   validates :recipe,
     uniqueness: { scope: :ingredient_id }
-  validates :unit,
+  validates :amount,
     numericality: { greater_than: 0 }
 end
