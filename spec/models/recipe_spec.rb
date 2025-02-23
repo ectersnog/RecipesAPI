@@ -19,6 +19,8 @@ RSpec.describe Recipe do
   describe 'associations' do
     it { is_expected.to have_many(:recipe_categories) }
     it { is_expected.to have_many(:categories).through(:recipe_categories) }
+    it { is_expected.to have_many(:recipe_ingredients) }
+    it { is_expected.to have_many(:ingredients).through(:recipe_ingredients) }
   end
 
   describe '#slug' do

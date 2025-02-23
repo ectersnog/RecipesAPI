@@ -9,6 +9,10 @@ class Recipe < ApplicationRecord
     dependent: :destroy
   has_many :categories,
     through: :recipe_categories
+  has_many :recipe_ingredients,
+    dependent: :destroy
+  has_many :ingredients,
+    through: :recipe_ingredients
 
   validates :name,
     length: { maximum: 100 },
