@@ -5,21 +5,23 @@ class RecipeIngredient < ApplicationRecord
   belongs_to :ingredient
 
   enum :unit, {
-    tablespoon: 'tablespoon',
-    teaspoon: 'teaspoon',
-    ounce: 'ounce',
-    fluid_ounce: 'fluid_ounce',
     cup: 'cup',
-    quart: 'quart',
-    pint: 'pint',
+    fluid_ounce: 'fluid_ounce',
     gallon: 'gallon',
-    pound: 'pound',
-    milliliter: 'milliliter',
     gram: 'gram',
     kilogram: 'kilogram',
-    liter: 'liter'
+    liter: 'liter',
+    milliliter: 'milliliter',
+    ounce: 'ounce',
+    pint: 'pint',
+    pound: 'pound',
+    quart: 'quart',
+    tablespoon: 'tablespoon',
+    teaspoon: 'teaspoon'
   }
 
   validates :recipe,
     uniqueness: { scope: :ingredient_id }
+  validates :unit,
+    numericality: { greater_than: 0 }
 end
