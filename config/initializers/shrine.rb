@@ -9,15 +9,21 @@ Shrine.storages = if Rails.env.test?
     cache: Shrine::Storage::Memory.new,
     store: Shrine::Storage::Memory.new
   }
+elsif Rails.env.development?
+  {
+    cache: Shrine::Storage::FileSystem.new("public", prefix: "dev/uploads/cache"),
+    store: Shrine::Storage::FileSystem.new("public", prefix: "dev/uploads")
+  }
 else
   {
     cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"),
     store: Shrine::Storage::FileSystem.new("public", prefix: "uploads")
-}
+  }
 end
 
 Shrine.plugin :activerecord
 Shrine.plugin :cached_attachment_data
+Shrine.plugin :derivatives
 Shrine.plugin :restore_cached_data
 Shrine.plugin :determine_mime_type, analyzer: :marcel
 Shrine.plugin :validation

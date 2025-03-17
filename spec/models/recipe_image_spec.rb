@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe RecipeImage do
   it "has a valid factory" do
-    expect(create(:recipe_image)).to be_valid
+    instance = create(:recipe_image)
+    expect(instance).to be_valid
   end
 
   describe "associations" do
