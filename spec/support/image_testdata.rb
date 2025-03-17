@@ -3,7 +3,7 @@
 module TestData
   module_function
 
-  def image_test
+  def image_data
     attacher = Shrine::Attacher.new
     attacher.set(uploaded_image)
 
