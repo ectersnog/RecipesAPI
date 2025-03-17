@@ -33,7 +33,6 @@ RSpec.configure do |config|
 
   config.around(:each, :search) do |example|
   end
-
 end
 
 RSpec::Sidekiq.configure do |config|
