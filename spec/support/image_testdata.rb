@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module TestData
-  module_function
-
   def image_data
     attacher = Shrine::Attacher.new
     attacher.set(uploaded_image)
@@ -18,7 +16,7 @@ module TestData
   end
 
   def uploaded_image
-    file = File.open("test/files/image.jpg", binmode: true)
+    file = File.open("test/media/image.jpg", binmode: true)
 
     # for performance we skip metadata extraction and assign test metadata
     uploaded_file = Shrine.upload(file, :store, metadata: false)
