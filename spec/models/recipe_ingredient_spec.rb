@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe RecipeIngredient do
   it "has a valid factory" do
-    expect(create(:recipe_ingredient)).to be_valid
+    instance = create(:recipe_ingredient)
+    expect(instance).to be_valid
   end
 
   describe "associations" do

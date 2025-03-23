@@ -5,6 +5,6 @@ FactoryBot.define do
     recipe
     ingredient
     amount { FFaker::Number.decimal }
-    unit { RecipeIngredient.units.keys.sample }
+    unit { Units.all.sample }
   end
 end
