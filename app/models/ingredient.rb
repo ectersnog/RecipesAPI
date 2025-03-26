@@ -10,15 +10,8 @@ class Ingredient < ApplicationRecord
   has_many :recipes,
     through: :recipe_ingredients
 
-  enum :state, { pending: 0, published: 1, archived: 2, deleted: 3 }
+  enum :state, { pending: 0, published: 1, archived: 2 }
 
-  before_validation :normalize_name
+  normalizes :name, with: ->(name) { name.downcase.encode('utf-8') }
   validates :name, presence: true
-
-  private
-
-  def normalize_name
-    self.name = name.to_s.downcase
-    self.name = name.encode("UTF-8", invalid: :replace, undef: :replace, replace: "")
-  end
 end
