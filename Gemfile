@@ -48,3 +48,5 @@ end
 gem "shrine", "~> 3.6"
 
 gem "image_processing", "~> 1.14"
+
+gem "ingreedy", "~> 0.1.0"
