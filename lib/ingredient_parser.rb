@@ -4,6 +4,9 @@ class IngredientParser
   # Parses ingredients by unit, amount, and ingredient name
   #
   # @param line [String] The line of text to be parsed
+  #
+  # @raise [IngredientParser::Error]
+  #
   # @return [RecipeIngredient] RecipeIngredient model with all values applied
   def self.from_string(line)
     begin

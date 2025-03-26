@@ -11,7 +11,7 @@ class Units
   # Get the list of aliases for a measurement type
   #
   # @param unit [String] measurement name
-  # @return [Array] list of associated measurement names
+  # @return [Array<String>] list of associated measurement names
   def self.aliases(unit)
     Ingreedy.dictionaries.current.units[unit.to_sym]
   end
