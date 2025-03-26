@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class IngredientParser
+  class Error < StandardError
+  end
+
   # Parses ingredients by unit, amount, and ingredient name
-  #
   # @param line [String] The line of text to be parsed
-  #
   # @raise [IngredientParser::Error]
-  #
   # @return [RecipeIngredient] RecipeIngredient model with all values applied
   def self.from_string(line)
     begin
@@ -15,12 +15,6 @@ class IngredientParser
       RecipeIngredient.new(unit: result.unit, amount: result.amount, ingredient:)
     rescue Ingreedy::ParseFailed, Parslet::ParseFailed
       raise IngredientParser::Error
-    end
-  end
-
-  class Error < StandardError
-    def message
-      "unable to parse ingredient"
     end
   end
 end
