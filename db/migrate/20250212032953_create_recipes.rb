@@ -4,7 +4,7 @@ class CreateRecipes < ActiveRecord::Migration[8.0]
   def change
     create_table :recipes, id: :uuid do |t|
       t.string :name, null: false
-      t.references :user, { null: false, foreign_key: true, type: :uuid }
+      t.references :user, null: false, type: :uuid, foreign_key: true, index: false
       t.json :nutritional_info, default: {}
       t.text :description
       t.text :steps, array: true, default: []
