@@ -78,8 +78,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_20_224111) do
 
   create_table "recipes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "user_id"
-    t.bigint "{null: false, foreign_key: true, type: :uuid}_id"
+    t.uuid "user_id", null: false
     t.json "nutritional_info", default: {}
     t.text "description"
     t.text "steps", default: [], array: true
@@ -93,8 +92,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_20_224111) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_recipes_on_slug", unique: true
-    t.index ["user_id"], name: "index_recipes_on_user_id"
-    t.index ["{null: false, foreign_key: true, type: :uuid}_id"], name: "idx_on_{null: false, foreign_key: true, type: :uuid_d0faee67c1"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -115,4 +112,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_20_224111) do
   add_foreign_key "recipe_images", "recipes"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
+  add_foreign_key "recipes", "users"
 end
