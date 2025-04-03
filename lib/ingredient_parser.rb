@@ -14,7 +14,10 @@ class IngredientParser
       ingredient = Ingredient.find_or_create_by(name: result.ingredient)
       RecipeIngredient.new(unit: result.unit, amount: result.amount, ingredient:)
     rescue Ingreedy::ParseFailed, Parslet::ParseFailed
-      raise IngredientParser::Error
+      # raise IngredientParser::Error
+      instance = RecipeIngredient.new
+      instance.errors.add(:ingredient, :invalid, message: "Unable to parse ingredient: #{line.strip}")
+      instance
     end
   end
 end

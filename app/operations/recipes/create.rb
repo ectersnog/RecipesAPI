@@ -2,39 +2,23 @@
 
 module Recipes
   class Create
-    def self.call(user, params:)
-      ingredients = params.delete(:ingredients)
-      recipe_name = params.delete(:name)
-      recipe = build_recipe(recipe_name, user, params:)
-      build_recipe_ingredients(recipe, ingredients)
-      diet_types(recipe, params:)
-      recipe.save!
-      recipe
+    def initialize(user, params:)
+      @ingredients = params.delete(:ingredients)
+      @params = params
+      @user = user
     end
 
-    def self.build_recipe_ingredients(recipe, ingredients)
-      ingredients.each do |ingredient|
-        recipe.recipe_ingredients << IngredientParser.from_string(ingredient)
+    def self.call(user, params: {})
+      new(user, params:).call
+    end
+
+    def call
+      @user.recipes.create(@params) do |obj|
+        obj.recipe_ingredients = @ingredients.map do |ingredient|
+          # IngredientParser.from_string(ingredient)
+          RecipeIngredient.new(user_input: ingredient)
+        end
       end
-    end
-
-    def self.build_recipe(name, user, params:)
-      Recipe.new(name:,
-        user_id: user.id,
-        steps: params.delete(:steps),
-        description: params.delete(:description),
-        nutritional_info: params.delete(:nutritional_info)
-      )
-    end
-
-    def self.diet_types(recipe, params:)
-      recipe.is_gluten_free = params.delete(:is_gluten_free) if params.key?(:is_gluten_free)
-      recipe.is_carb_free = params.delete(:is_carb_free) if params.key?(:is_carb_free)
-      recipe.is_kosher = params.delete(:is_kosher) if params.key?(:is_kosher)
-      recipe.is_paleo = params.delete(:is_paleo) if params.key?(:is_paleo)
-      recipe.is_vegan = params.delete(:is_vegan) if params.key?(:is_vegan)
-      recipe.is_vegetarian = params.delete(:is_vegetarian) if params.key?(:is_vegetarian)
     end
   end
 end
-
