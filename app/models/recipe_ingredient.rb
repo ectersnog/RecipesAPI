@@ -3,9 +3,9 @@
 class RecipeIngredient < ApplicationRecord
   belongs_to :recipe
   belongs_to :ingredient
+  attr_accessor :input
 
-  validates :input,
-    presence: true
+  validate :user_input
   validates :recipe,
     uniqueness: { scope: :ingredient_id }
   validates :amount,
@@ -13,27 +13,15 @@ class RecipeIngredient < ApplicationRecord
   validates :unit,
     inclusion: { in: Units.all.map(&:to_s) }
 
-  def user_input=(str)
+  private
+
+  def user_input
     begin
-      parsed = Ingreedy.parse(str.strip)
+      parsed = Ingreedy.parse(input.strip)
       ingredient = Ingredient.find_or_create_by(name: parsed.ingredient)
-      assign_attributes(amount: parsed.amount, unit: parsed.unit, ingredient:, input: str)
+      assign_attributes(amount: parsed.amount, unit: parsed.unit, ingredient:)
     rescue Ingreedy::ParseFailed, Parslet::ParseFailed
-      errors.add(:input, :invalid, message: "#{str} is not a valid ingredient")
-    ensure
-      assign_attributes(input: str) if input.blank?
+      errors.add(:input, :invalid, message: "#{input} is not a valid ingredient")
     end
   end
-
-  # private
-
-  # def input_validation
-  #   begin
-  #     parsed = Ingreedy.parse(input.strip)
-  #     ingredient = Ingredient.find_or_create_by(name: parsed.ingredient)
-  #     assign_attributes(amount: parsed.amount, unit: parsed.unit, ingredient:)
-  #   rescue Ingreedy::ParseFailed, Parslet::ParseFailed
-  #     errors.add(:input, :invalid, message: "#{input} is not a valid ingredient")
-  #   end
-  # end
 end
