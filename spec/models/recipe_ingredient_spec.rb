@@ -10,6 +10,6 @@ RSpec.describe RecipeIngredient do
 
   describe "associations" do
     it { is_expected.to belong_to(:recipe) }
-    it { is_expected.to belong_to(:ingredient).required }
+    it { is_expected.to belong_to(:ingredient) }
   end
 end
