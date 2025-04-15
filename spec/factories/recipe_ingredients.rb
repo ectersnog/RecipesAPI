@@ -6,6 +6,6 @@ FactoryBot.define do
     ingredient factory: :ingredient
     amount { FFaker::Number.decimal }
     unit { Units.all.sample }
-    input { "#{amount} #{unit.to_s.sub('_', ' ')} of #{ingredient.name}" }
+    input { "#{amount} #{unit.to_s.humanize} of #{ingredient.name}" }
   end
 end

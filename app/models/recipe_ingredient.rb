@@ -14,20 +14,25 @@ class RecipeIngredient < ApplicationRecord
 
   def input=(str)
     super
-    begin
-      parsed = Ingreedy.parse(str.strip)
-      ingredient = Ingredient.find_or_create_by(name: parsed.ingredient)
-      assign_attributes(amount: parsed.amount, unit: parsed.unit, ingredient:)
-    rescue Ingreedy::ParseFailed, Parslet::ParseFailed
-      @custom_errors = true
-    end
+    return if parser.nil?
+
+    ingredient = Ingredient.find_or_create_by(name: parser.ingredient)
+    assign_attributes(amount: parser.amount, unit: parser.unit, ingredient:)
   end
 
   private
 
-  def validate_user_input
-    return unless @custom_errors
+  def parser
+    return if input.blank?
 
-    errors.add(:input, :invalid, message: "#{input} is not a valid ingredient")
+    @parser ||= Ingreedy.parse(input.to_s.strip)
+  rescue Ingreedy::ParseFailed, Parslet::ParseFailed
+    nil
+  end
+
+  def validate_user_input
+    return unless parser.nil?
+
+    errors.add(:input, :invalid, msg: "Unable to parse input")
   end
 end
