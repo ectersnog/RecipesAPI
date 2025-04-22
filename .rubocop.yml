@@ -135,6 +135,9 @@ RSpec/VariableName:
     - Authorization
     - ^ids
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
