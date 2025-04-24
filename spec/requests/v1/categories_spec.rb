@@ -6,22 +6,8 @@ RSpec.describe 'v1/categories' do
   path '/v1/categories' do
     get('list categories') do
       response(200, 'successful') do
-        schema type: :array, items: {
-          type: :object,
-          properties: {
-            id: { type: :string,
-              format: 'uuid',
-              example: '123e4567-e89b-12d3-a456-426614174000' },
-            name: { type: :string },
-            slug: { type: :string },
-            parent_id: { type: :string, nullable: true },
-            created_at: { type: :string,
-              format: 'date-time' },
-            updated_at: { type: :string,
-              format: 'date-time' }
-          },
-          required: %w[id name slug created_at updated_at]
-        }
+        schema "$ref" => '#/components/schemas/categories'
+
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -55,17 +41,7 @@ RSpec.describe 'v1/categories' do
 
     get('show category') do
       response(200, 'successful') do
-        schema type: :object,
-          properties: {
-            id: { type: :string, format: 'uuid',
-                  example: '123e4567-e89b-12d3-a456-426614174000' },
-            name: { type: :string },
-            slug: { type: :string },
-            parent_id: { type: :string, nullable: true },
-            created_at: { type: :string, format: 'date-time' },
-            updated_at: { type: :string, format: 'date-time' }
-          },
-          required: %w[id name slug created_at updated_at]
+        schema "$ref" => '#/components/schemas/category'
 
         let!(:category) { create(:category, slug: '123') }
         let(:slug) { category.slug }

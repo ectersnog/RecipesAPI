@@ -3,6 +3,35 @@ openapi: 3.0.1
 info:
   title: API V1
   version: v1
+definitions:
+  categories_schema:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+        slug:
+          type: string
+        parent_id:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+      - slug
+      - created_at
+      - updated_at
 paths:
   "/v1/categories":
     get:

@@ -21,6 +21,31 @@ RSpec.configure do |config|
         title: 'API V1',
         version: 'v1'
       },
+      components: {
+        schemas: {
+          categories: {
+            type: :array, items: {
+            "$ref" => '#/components/schemas/category'
+          }
+        },
+            category: {
+              type: :object,
+              properties: {
+                id: { type: :string,
+                  format: 'uuid',
+                  example: '123e4567-e89b-12d3-a456-426614174000' },
+                name: { type: :string },
+                slug: { type: :string },
+                parent_id: { type: :string, nullable: true },
+                created_at: { type: :string,
+                  format: 'date-time' },
+                updated_at: { type: :string,
+                  format: 'date-time' }
+                },
+                required: %w[id name slug created_at updated_at]
+              }
+          }
+          },
       paths: {},
       servers: [
         {
