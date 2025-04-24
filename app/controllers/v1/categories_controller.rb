@@ -14,7 +14,7 @@ class V1::CategoriesController < ApplicationController
   private
 
   def set_category
-    @category = Category.find_by(slug: params[:slug].downcase) || Category.find_by(id: params[:id])
+    @category = Category.find_by(slug: params[:slug].downcase)
   end
 
   def category_params
