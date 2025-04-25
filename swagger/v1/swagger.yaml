@@ -3,10 +3,13 @@ openapi: 3.0.1
 info:
   title: API V1
   version: v1
-definitions:
-  categories_schema:
-    type: array
-    items:
+components:
+  schemas:
+    categories:
+      type: array
+      items:
+        "$ref": "#/components/schemas/category"
+    category:
       type: object
       properties:
         id:
@@ -39,11 +42,10 @@ paths:
       responses:
         '200':
           description: successful
-  "/v1/categories/{slug}":
+  "/v1/categories/{id}":
     parameters:
-    - name: slug
+    - name: id
       in: path
-      description: slug
       required: true
       schema:
         type: string
