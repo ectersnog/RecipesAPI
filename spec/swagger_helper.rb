@@ -24,8 +24,12 @@ RSpec.configure do |config|
       components: {
         schemas: {
           categories: {
-            type: :array, items: {
-            "$ref" => '#/components/schemas/category'
+          type: :object,
+          properties: {
+            type: :array,
+            items: {
+              "$ref" => '#/componenets/schemas/category'
+            }
           }
         },
             category: {

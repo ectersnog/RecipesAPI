@@ -191,6 +191,9 @@ GEM
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
+    jbuilder (2.13.0)
+      actionview (>= 5.0.0)
+      activesupport (>= 5.0.0)
     json (2.10.2)
     json-schema (5.1.1)
       addressable (~> 2.8)
@@ -463,6 +466,7 @@ DEPENDENCIES
   friendly_id
   image_processing (~> 1.14)
   ingreedy (~> 0.1.0)
+  jbuilder (~> 2.13)
   jsonb_accessor
   kaminari
   marcel

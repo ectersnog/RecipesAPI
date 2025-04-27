@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
-class V1::CategoriesController < ApplicationController
-  def index
-    render json: Categories::Index.call(params:)
-  end
+module V1
+  class CategoriesController < ApplicationController
+    def index
+      # @categories = Category.all
+      @categories = Categories::Index.call(params:)
+    end
 
-  def show
-    render json: Categories::Show.call(params:)
+    def show
+      render json: Categories::Show.call(params:)
+    end
   end
 end
