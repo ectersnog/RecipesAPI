@@ -5,10 +5,14 @@ require 'swagger_helper'
 RSpec.describe 'v1/categories' do
   path '/v1/categories' do
     get('list categories') do
-      response(200, 'successful') do
-        schema "$ref" => '#/components/schemas/categories'
+      response '200', 'categories found' do
+        schema "$ref" => '#/components/schemas/categories_response'
 
-        run_test!
+        before do
+          create_list(:category, 3)
+        end
+
+        run_test!(openapi_all_properties_required: true)
       end
     end
   end
@@ -17,13 +21,13 @@ RSpec.describe 'v1/categories' do
     parameter name: 'id', in: :path, type: :string
 
     get('show category') do
-      response(200, 'successful') do
+      response 200, 'successful' do
         schema "$ref" => '#/components/schemas/category'
 
         let(:category) { create(:category) }
         let(:id) { category.id }
 
-        run_test!
+        run_test!(openapi_all_properties_required: true)
       end
     end
   end

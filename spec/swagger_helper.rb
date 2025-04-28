@@ -23,33 +23,46 @@ RSpec.configure do |config|
       },
       components: {
         schemas: {
-          categories: {
-          type: :object,
-          properties: {
-            type: :array,
-            items: {
-              "$ref" => '#/componenets/schemas/category'
-            }
-          }
-        },
-            category: {
-              type: :object,
-              properties: {
-                id: { type: :string,
-                  format: 'uuid',
-                  example: '123e4567-e89b-12d3-a456-426614174000' },
-                name: { type: :string },
-                slug: { type: :string },
-                parent_id: { type: :string, nullable: true },
-                created_at: { type: :string,
-                  format: 'date-time' },
-                updated_at: { type: :string,
-                  format: 'date-time' }
-                },
-                required: %w[id name slug created_at updated_at]
-              }
-          }
+          category: {
+            type: :object,
+            properties: {
+              id: { type: :string,
+                format: :uuid,
+                example: '123e4567-e89b-12d3-a456-426614174000' },
+              name: { type: :string },
+              slug: { type: :string },
+              parent_id: { type: :uuid, nullable: true },
+              created_at: { type: :string,
+                format: 'date-time' },
+              updated_at: { type: :string,
+                format: 'date-time' }
+            },
+            required: %w[id name slug parent_id created_at updated_at]
           },
+          categories_response: {
+            type: :object,
+            properties: {
+              categories: {
+                type: :array,
+                items: {
+                  "$ref" => '#/components/schemas/category'
+                }
+              },
+              categories_info: {
+                type: :object,
+                properties: {
+                  current_page: { type: :integer },
+                  total_pages: { type: :integer },
+                  records: { type: :integer },
+                  total_records: { type: :integer }
+                },
+                required: %w[current_page total_pages records total_records]
+              }
+            },
+            required: %w[categories categories_info]
+          }
+        }
+      },
       paths: {},
       servers: [
         {
