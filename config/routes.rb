@@ -2,8 +2,8 @@
 
 Rails.application.routes.draw do
   namespace :v1 do
-    resources :categories, defaults: { format: :json }
-    resources :recipes, defaults: { format: :json }
+    resources :categories, defaults: { format: :json }, only: %i[index show]
+    resources :recipes, defaults: { format: :json }, only: [:index]
   end
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'

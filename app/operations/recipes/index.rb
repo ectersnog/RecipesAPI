@@ -3,8 +3,8 @@
 module Recipes
   class Index
     def initialize(params:)
-      @page = params[:page].to_i
-      @per_page = params[:per_page].to_i
+      @page = params[:page] ||= 1
+      @per_page = params[:per_page] ||= 10
     end
 
     def self.call(params: {})
