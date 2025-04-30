@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Categories
+module Recipes
   class Index
     def initialize(params:)
       @page = params[:page].to_i
@@ -12,7 +12,8 @@ module Categories
     end
 
     def call
-      Category.order(:name).page(@page).per(@per_page)
+      # Recipes.order(:name).page(@page).per(@per_page)
+      RecipeQuery.new.paginate(page: @page, per_page: @per_page)
     end
   end
 end

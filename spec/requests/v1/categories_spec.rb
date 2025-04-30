@@ -5,7 +5,14 @@ require 'swagger_helper'
 RSpec.describe 'v1/categories' do
   path '/v1/categories' do
     get('list categories') do
+      parameter name: :page, in: :query, type: :integer,
+        description: 'Page number'
+      parameter name: :per_page, in: :query, type: :integer,
+        description: 'Maximum number returned per page'
+
       response '200', 'categories found' do
+        let(:page) { 1 }
+        let(:per_page) { 3 }
         schema "$ref" => '#/components/schemas/categories_response'
 
         before do
