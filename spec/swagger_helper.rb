@@ -48,7 +48,7 @@ RSpec.configure do |config|
                   "$ref" => '#/components/schemas/category'
                 }
               },
-              categories_info: {
+              meta: {
                 type: :object,
                 properties: {
                   current_page: { type: :integer },
@@ -59,7 +59,7 @@ RSpec.configure do |config|
                 required: %w[current_page total_pages records total_records]
               }
             },
-            required: %w[categories categories_info]
+            required: %w[categories meta]
           }
         }
       },

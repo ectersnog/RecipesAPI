@@ -62,6 +62,17 @@ paths:
   "/v1/categories":
     get:
       summary: list categories
+      parameters:
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Maximum number returned per page
+        schema:
+          type: integer
       responses:
         '200':
           description: categories found
