@@ -45,6 +45,7 @@ RSpec.configure do |config|
               id: { type: :string,
                 format: :uuid,
                 example: '123e4567-e89b-12d3-a456-426614174000' },
+              name: { type: :string },
               user_id: { type: :string,
                 format: :uuid,
                 example: '123e4567-e89b-12d3-a456-426614174000' },
@@ -53,18 +54,42 @@ RSpec.configure do |config|
                 items: { type: :string } },
               is_gluten_free: { type: :boolean },
               is_carb_free: { type: :boolean },
-              Is_kosher: { type: :boolean },
+              is_kosher: { type: :boolean },
               is_paleo: { type: :boolean },
               is_vegetarian: { type: :boolean },
               is_vegan: { type: :boolean },
-              name: { type: :string },
               slug: { type: :string },
               created_at: { type: :string,
                 format: 'date-time' },
               updated_at: { type: :string,
                 format: 'date-time' }
             },
-            required: %w[id name slug parent_id created_at updated_at]
+            required: %w[id name slug created_at updated_at]
+          },
+          meta: {
+            type: :object,
+            properties: {
+              current_page: { type: :integer },
+              total_pages: { type: :integer },
+              records: { type: :integer },
+              total_records: { type: :integer }
+            },
+            required: %w[current_page total_pages records total_records]
+          },
+          recipes_response: {
+            type: :object,
+            properties: {
+              recipes: {
+                type: :array,
+                items: {
+                  "$ref" => '#/components/schemas/recipe'
+                }
+              },
+              meta: {
+                "$ref" => '#/components/schemas/meta'
+              }
+            },
+            required: %w[recipes meta]
           },
           categories_response: {
             type: :object,
@@ -76,14 +101,7 @@ RSpec.configure do |config|
                 }
               },
               meta: {
-                type: :object,
-                properties: {
-                  current_page: { type: :integer },
-                  total_pages: { type: :integer },
-                  records: { type: :integer },
-                  total_records: { type: :integer }
-                },
-                required: %w[current_page total_pages records total_records]
+                "$ref" => '#/components/schemas/meta'
               }
             },
             required: %w[categories meta]

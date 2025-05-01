@@ -32,6 +32,79 @@ components:
       - parent_id
       - created_at
       - updated_at
+    recipe:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+        user_id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        description:
+          type: string
+        steps:
+          type: array
+          items:
+            type: string
+        is_gluten_free:
+          type: boolean
+        is_carb_free:
+          type: boolean
+        is_kosher:
+          type: boolean
+        is_paleo:
+          type: boolean
+        is_vegetarian:
+          type: boolean
+        is_vegan:
+          type: boolean
+        slug:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+      - slug
+      - created_at
+      - updated_at
+    meta:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        total_pages:
+          type: integer
+        records:
+          type: integer
+        total_records:
+          type: integer
+      required:
+      - current_page
+      - total_pages
+      - records
+      - total_records
+    recipes_response:
+      type: object
+      properties:
+        recipes:
+          type: array
+          items:
+            "$ref": "#/components/schemas/recipe"
+        meta:
+          "$ref": "#/components/schemas/meta"
+      required:
+      - recipes
+      - meta
     categories_response:
       type: object
       properties:
@@ -39,25 +112,11 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/category"
-        categories_info:
-          type: object
-          properties:
-            current_page:
-              type: integer
-            total_pages:
-              type: integer
-            records:
-              type: integer
-            total_records:
-              type: integer
-          required:
-          - current_page
-          - total_pages
-          - records
-          - total_records
+        meta:
+          "$ref": "#/components/schemas/meta"
       required:
       - categories
-      - categories_info
+      - meta
 paths:
   "/v1/categories":
     get:
@@ -88,6 +147,23 @@ paths:
       responses:
         '200':
           description: successful
+  "/v1/recipes":
+    get:
+      summary: list recipes
+      parameters:
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: Maximum number returned per page
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: recipes found
 servers:
 - url: http://{defaultHost}
   variables:

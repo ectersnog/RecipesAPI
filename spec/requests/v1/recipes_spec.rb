@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-RSpec.describe 'v1/recipes', type: :request do
+RSpec.describe 'v1/recipes' do
   path '/v1/recipes' do
     get('list recipes') do
       parameter name: :page, in: :query, type: :integer,
@@ -11,10 +11,10 @@ RSpec.describe 'v1/recipes', type: :request do
       response '200', 'recipes found' do
         let(:page) { 1 }
         let(:per_page) { 3 }
-        schema "$ref" => '#/components/schemas/recipes'
+        schema "$ref" => '#/components/schemas/recipes_response'
 
         before do
-          create_list(:recipes, 3)
+          create_list(:recipe, 3)
         end
 
         run_test!(openapi_all_properties_required: true)
