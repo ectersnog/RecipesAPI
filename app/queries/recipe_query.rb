@@ -35,6 +35,6 @@ class RecipeQuery
   end
 
   def paginate(page: 1, per_page: 10)
-    @scope.page(page).per(per_page)
+    @scope.order(:name).page(page).per(per_page)
   end
 end
