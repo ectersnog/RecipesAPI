@@ -4,5 +4,4 @@ json.categories do
   json.partial! 'category', collection: categories, as: :category
 end
 
-json.partial! 'shared/meta', locals: { record: categories }
-
+json.partial! 'pagination/meta', locals: { record: categories }
