@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
 module Recipes
-  class Show
+  class Show < ApplicationOperation
     def initialize(params:)
       @id = params[:id]
-    end
-
-    def self.call(params: {})
-      new(params:).call
     end
 
     def call

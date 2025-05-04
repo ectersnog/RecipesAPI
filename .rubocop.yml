@@ -44,6 +44,10 @@ Layout/MultilineMethodCallIndentation:
 Lint/EmptyBlock:
   Enabled: false
 
+Lint/MissingSuper:
+  Exclude:
+  - 'app/operations/**/*'
+
 Metrics/AbcSize:
   Max: 50
 
