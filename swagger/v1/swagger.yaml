@@ -32,6 +32,22 @@ components:
       - parent_id
       - created_at
       - updated_at
+    categories:
+      type: array
+      items:
+        "$ref": "#/components/schemas/categories"
+    categories_response:
+      type: object
+      properties:
+        categories:
+          type: array
+          items:
+            "$ref": "#components/schemas/category"
+        meta:
+          "$ref": "#components/schemas/meta"
+      required:
+      - categories
+      - meta
     recipe:
       type: object
       properties:
@@ -77,6 +93,18 @@ components:
       - slug
       - created_at
       - updated_at
+    recipes_response:
+      type: object
+      properties:
+        recipes:
+          type: array
+          items:
+            "$ref": "#/components/schemas/recipe"
+        meta:
+          "$ref": "#/components/schemas/meta"
+      required:
+      - recipes
+      - meta
     meta:
       type: object
       properties:
@@ -93,30 +121,6 @@ components:
       - total_pages
       - records
       - total_records
-    recipes_response:
-      type: object
-      properties:
-        recipes:
-          type: array
-          items:
-            "$ref": "#/components/schemas/recipe"
-        meta:
-          "$ref": "#/components/schemas/meta"
-      required:
-      - recipes
-      - meta
-    categories_response:
-      type: object
-      properties:
-        categories:
-          type: array
-          items:
-            "$ref": "#/components/schemas/category"
-        meta:
-          "$ref": "#/components/schemas/meta"
-      required:
-      - categories
-      - meta
 paths:
   "/v1/categories":
     get:
@@ -164,6 +168,18 @@ paths:
       responses:
         '200':
           description: recipes found
+  "/v1/recipes/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show recipe
+      responses:
+        '200':
+          description: successful
 servers:
 - url: http://{defaultHost}
   variables:

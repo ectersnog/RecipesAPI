@@ -23,4 +23,19 @@ RSpec.describe 'v1/recipes' do
       end
     end
   end
+
+  path '/v1/recipes/{id}' do
+    parameter name: 'id', in: :path, type: :string
+
+    get('show recipe') do
+      response 200, 'successful' do
+        schema "$ref" => '#/components/schemas/recipe'
+
+        let(:recipe) { create(:recipe) }
+        let(:id) { recipe.id }
+
+        run_test!(openapi_all_properties_required: true)
+      end
+    end
+  end
 end
