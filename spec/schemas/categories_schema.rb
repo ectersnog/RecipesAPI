@@ -23,7 +23,7 @@ module Schemas
         categories: {
           type: :array,
           items: {
-            "$ref" => '#/components/schemas/categories',
+            "$ref" => '#/components/schemas/categories'
           }
         },
         categories_response: {

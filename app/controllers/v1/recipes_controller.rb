@@ -6,5 +6,10 @@ module V1
       recipes = Recipes::Index.call(params:)
       render locals: { recipes: }
     end
+
+    def show
+      recipe = Recipes::Show.call(params:)
+      render locals: { recipe: }
+    end
   end
 end
