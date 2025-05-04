@@ -27,7 +27,7 @@ RSpec.configure do |config|
           Schemas::Categories.schema,
           Schemas::Recipes.schema,
           Schemas::Meta.schema
-        ].inject(:merge),
+        ].inject(:merge)
       },
       paths: {},
       servers: [
