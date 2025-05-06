@@ -16,7 +16,9 @@ RSpec.describe 'v1/categories' do
         schema "$ref" => '#/components/schemas/categories_response'
 
         before do
-          create_list(:category, 3)
+          create(:category, name: 'Potatoes')
+          create(:category, name: 'Tacos')
+          create(:category, name: 'Pizza')
         end
 
         run_test!(openapi_all_properties_required: true)

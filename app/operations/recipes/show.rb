@@ -2,12 +2,12 @@
 
 module Recipes
   class Show < ApplicationOperation
-    def initialize(params:)
-      @id = params[:id]
+    def initialize(recipe:)
+      @recipe = recipe
     end
 
     def call
-      Recipe.find(@id)
+      @recipe
     end
   end
 end

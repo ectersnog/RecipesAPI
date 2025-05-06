@@ -11,7 +11,7 @@ RSpec.describe Recipes::Show do
     end
 
     it 'returns a specific record by id' do
-      result = described_class.call(params: { id: recipe_a.id })
+      result = described_class.call(recipe: recipe_a)
       expect(result.id).to eq(recipe_a.id)
     end
   end

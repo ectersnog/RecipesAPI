@@ -2,12 +2,12 @@
 
 module Categories
   class Show < ApplicationOperation
-    def initialize(params:)
-      @id = params[:id]
+    def initialize(category:)
+      @category = category
     end
 
     def call
-      Category.find(@id)
+      @category
     end
   end
 end

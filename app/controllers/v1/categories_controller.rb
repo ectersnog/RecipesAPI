@@ -8,7 +8,9 @@ module V1
     end
 
     def show
-      category = Categories::Show.call(params:)
+      category = Categories::Show.call(
+        category: Category.find(params[:id])
+      )
       render locals: { category: }
     end
   end

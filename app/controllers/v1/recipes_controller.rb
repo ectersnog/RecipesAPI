@@ -8,7 +8,9 @@ module V1
     end
 
     def show
-      recipe = Recipes::Show.call(params:)
+      recipe = Recipes::Show.call(
+        recipe: Recipe.find(params[:id])
+      )
       render locals: { recipe: }
     end
   end
