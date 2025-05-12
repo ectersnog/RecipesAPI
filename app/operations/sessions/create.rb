@@ -2,7 +2,6 @@
 
 module Sessions
   class Create < ApplicationOperation
-
     def initialize(params:)
       @params = params
     end
