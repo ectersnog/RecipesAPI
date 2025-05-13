@@ -8,7 +8,7 @@ module Sessions
 
     def call
       user = User.find_by(email: @params[:email])
-      return nil unless user && user.authenticate(@params[:password])
+      return unless user && user.authenticate(@params[:password])
 
       payload = {
         user_id: user.id,

@@ -2,12 +2,13 @@
 
 module V1
   class UsersController < ApplicationController
+    skip_before_action :authorize
     def create
-      session = Users::Create.call(params:)
-      if session.nil?
-        render json: { error: 'user already exists' }, status: :unprocessable_entity
+      user = Users::Create.call(params:)
+      if user.persisted?
+        render locals: { user: }
       else
-        render locals: { session: }
+        render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
       end
     end
   end
