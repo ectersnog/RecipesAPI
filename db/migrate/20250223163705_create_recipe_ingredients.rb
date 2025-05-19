@@ -6,6 +6,7 @@ class CreateRecipeIngredients < ActiveRecord::Migration[8.0]
       t.references :recipe, null: false, foreign_key: true, type: :uuid, index: false
       t.references :ingredient, null: false, foreign_key: true, type: :uuid, index: false
       t.float :amount, null: false
+      t.string :input, null: false, index: false
       t.string :unit, null: false, default: 'grams'
 
       t.timestamps

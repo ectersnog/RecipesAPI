@@ -69,6 +69,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_20_224111) do
     t.uuid "recipe_id", null: false
     t.uuid "ingredient_id", null: false
     t.float "amount", null: false
+    t.string "input", null: false
     t.string "unit", default: "grams", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

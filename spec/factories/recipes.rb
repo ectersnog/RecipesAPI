@@ -3,6 +3,8 @@
 FactoryBot.define do
   factory :recipe do
     name { FFaker::Lorem.sentence(4) }
+    user
+    user_id { user.id }
     description { FFaker::Lorem.sentence(20) }
     is_gluten_free { FFaker::Boolean.maybe }
     is_carb_free { FFaker::Boolean.maybe }

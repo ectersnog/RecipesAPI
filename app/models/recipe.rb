@@ -5,6 +5,7 @@ class Recipe < ApplicationRecord
 
   friendly_id :name, use: :slugged
 
+  belongs_to :user
   has_many :recipe_categories,
     dependent: :destroy
   has_many :categories,

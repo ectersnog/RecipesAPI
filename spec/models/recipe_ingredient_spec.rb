@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe RecipeIngredient do
   it "has a valid factory" do
-    instance = create(:recipe_ingredient)
+    instance = build(:recipe_ingredient)
     expect(instance).to be_valid
   end
 

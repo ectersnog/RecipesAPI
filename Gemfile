@@ -10,13 +10,20 @@ gem "dry-initializer-rails"
 gem "dry-operation"
 gem "dry-schema"
 gem "friendly_id"
+gem "image_processing", "~> 1.14"
+gem "ingreedy", "~> 0.1.0"
+gem "jbuilder", "~> 2.13"
 gem "jsonb_accessor"
 gem "kaminari"
 gem "marcel"
+gem "ostruct", "~> 0.6.1"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem "rack-cors"
 gem "rails", "~> 8.0.2"
+gem "rswag-api", "~> 2.16"
+gem "rswag-ui", "~> 2.16"
+gem "shrine", "~> 3.6"
 
 group :development do
   gem "annotate"
@@ -44,9 +51,3 @@ group :test do
   gem "simplecov", require: false
   gem "webmock"
 end
-
-gem "shrine", "~> 3.6"
-
-gem "image_processing", "~> 1.14"
-
-gem "ingreedy", "~> 0.1.0"

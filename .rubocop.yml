@@ -1,8 +1,6 @@
-require:
+plugins:
   - rubocop-rspec_rails
   - rubocop-factory_bot
-
-plugins:
   - rubocop-rails
   - rubocop-rspec
 
@@ -45,6 +43,10 @@ Layout/MultilineMethodCallIndentation:
 
 Lint/EmptyBlock:
   Enabled: false
+
+Lint/MissingSuper:
+  Exclude:
+  - 'app/operations/**/*'
 
 Metrics/AbcSize:
   Max: 50
@@ -136,6 +138,9 @@ RSpec/VariableName:
   AllowedPatterns:
     - Authorization
     - ^ids
+
+Style/ClassAndModuleChildren:
+  Enabled: false
 
 Style/Documentation:
   Enabled: false

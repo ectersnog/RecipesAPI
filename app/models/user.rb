@@ -6,6 +6,9 @@ class User < ApplicationRecord
   friendly_id :name, use: :slugged
   has_secure_password
 
+  has_many :recipes,
+    dependent: :destroy
+
   validates :name,
     length: { maximum: 30 },
     presence: true
