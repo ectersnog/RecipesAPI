@@ -2,7 +2,6 @@
 
 module V1
   class SessionsController < ApplicationController
-    skip_before_action :authorize
     def create
       session = Sessions::Create.call(params:)
       if session

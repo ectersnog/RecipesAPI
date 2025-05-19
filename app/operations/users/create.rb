@@ -16,13 +16,6 @@ module Users
       )
       user.save
       user
-      # return nil unless user.save
-      #
-      # payload = {
-      #   user_id: user.id,
-      #   exp: 7.days.from_now.to_i
-      # }
-      # JWT.encode(payload, ENV.fetch('JWT_SECRET_KEY'), 'HS256')
     end
   end
 end

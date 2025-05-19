@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
-  before_action :authorize
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+
   def current_user
     @current_user
   end
 
+  private
+
   def authorize
-    token = request.headers['Authorization:'].split.last
+    token = request.headers['Authorization']
     if token.nil?
       render json: { error: 'No token found' }, status: :unauthorized
     else
-      begin
-        @decoded = JWT.decode(token, ENV.fetch('JWT_SECRET_KEY'), 'HS256')
-        @current_user = User.find_by!(email: @decoded[:email])
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Not authorized' }, status: :unauthorized
-      rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
-        render json: { error: 'Token failure' }, status: :unauthorized
-      end
+      @decoded = JwtLib.token_decode(token.split.last)
+      @current_user ||= User.find_by(id: @decoded[:user_id])
     end
+  end
+
+  def render_unprocessable_entity_response(exception)
+    render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
   end
 end

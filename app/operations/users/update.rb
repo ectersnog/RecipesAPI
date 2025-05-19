@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-module Sessions
-  class Create < ApplicationOperation
+module Users
+  class Update < ApplicationOperation
     def initialize(params:)
       @params = params
     end
 
     def call
       user = User.find_by(email: @params[:email])
-      return unless user && user.authenticate(@params[:password])
+      return unless user
 
-      JwtLib.token_encode(user)
+      user.update(email: @params[:email], password: @params[:password])
     end
   end
 end
