@@ -2,15 +2,13 @@
 
 module Users
   class Update < ApplicationOperation
-    def initialize(params:)
+    def initialize(current_user: , params:)
+      @current_user = current_user
       @params = params
     end
 
     def call
-      user = User.find_by(email: @params[:email])
-      return unless user
-
-      user.update(email: @params[:email], password: @params[:password])
+      @current_user.update!(@params)
     end
   end
 end

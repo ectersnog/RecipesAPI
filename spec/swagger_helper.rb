@@ -23,10 +23,18 @@ RSpec.configure do |config|
         version: 'v1'
       },
       components: {
+        securitySchemes: {
+          bearer_auth: {
+            type: :http,
+            scheme: :bearer,
+            bearer_format: :JWT
+          }
+        },
         schemas: [
           Schemas::Categories.schema,
           Schemas::Recipes.schema,
-          Schemas::Meta.schema
+          Schemas::Meta.schema,
+          Schemas::Users.schema
         ].inject(:merge)
       },
       paths: {},

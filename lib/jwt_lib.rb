@@ -6,7 +6,7 @@ class JwtLib
 
   def self.token_decode(token)
     ActiveSupport::HashWithIndifferentAccess.new(
-      JWT.decode(token, JWT_SECRET_KEY, true, algorithm: ALGORITHM)[0]
+      JWT.decode(token, JWT_SECRET_KEY, true, { required_claims: ['exp'], algorithm: ALGORITHM })[0]
     )
   end
 

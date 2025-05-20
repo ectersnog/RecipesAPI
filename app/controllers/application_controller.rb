@@ -6,19 +6,24 @@ class ApplicationController < ActionController::API
   rescue_from JWT::VerificationError, with: :render_unauthorized_response
 
   def current_user
-    @current_user
+    @current_user ||= find_authorized_user
   end
 
   private
 
   def authorize
+    # binding.pry
+    return if current_user.present?
+
+    render json: { errors: 'Not Authorized' }, status: :unauthorized
+  end
+
+  def find_authorized_user
     token = request.headers['Authorization']
-    if token.nil?
-      render json: { error: 'No token found' }, status: :unauthorized
-    else
-      @decoded = JwtLib.token_decode(token.split.last)
-      @current_user ||= User.find_by(id: @decoded[:user_id])
-    end
+    return if token.nil?
+
+    decoded = JwtLib.token_decode(token.split.last)
+    User.find_by(id: decoded[:user_id])
   end
 
   def render_unprocessable_entity_response(exception)

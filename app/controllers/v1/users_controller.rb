@@ -13,12 +13,16 @@ module V1
     end
 
     def update
-      user = Users::Update.call(params:)
-      if user
-        render json: { message: "Updated successfully" }
-      else
-        render json: { errors: "Unable to update" }, status: :unprocessable_entity
-      end
+      Users::Update.call(current_user: current_user, params: update_params)
+      render locals: { user: current_user}
+    rescue ActiveRecord::RecordInvalid => e
+      render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+    end
+
+    private
+
+    def update_params
+      params.expect(data: %i[name email password password_confirmation])
     end
   end
 end
