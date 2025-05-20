@@ -34,29 +34,10 @@ RSpec.describe 'v1/users' do
       end
 
       let(:Authorization) { login_token }
-      response '200', 'successful' do
 
+      response '200', 'successful' do
         run_test!
       end
     end
-    #
-    # put('update user') do
-    #   parameter name: :Authorization, in: :header, type: :string
-    #   parameter name: :name, in: :query, type: :string
-    #   parameter name: :email, in: :query, type: :string
-    #   parameter name: :password, in: :query, type: :string
-    #   response '200', 'successful' do
-    #     let(:user) { create(:user) }
-    #     let(:name) { user.name }
-    #     let(:email) { user.email }
-    #     let(:password) { user.password }
-    #     let(:token) { Sessions::Create.call(params: { name:, email:, password: }) }
-    #     let(:Authorization) { "Bearer #{token}" }
-    #
-    #     run_test!
-    #   end
-    # end
-
   end
 end
-

@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
   rescue_from JWT::ExpiredSignature, with: :render_expired_signature
-  rescue_from JWT::VerificationError, with: :render_unauthorized_response
+  rescue_from JWT::VerificationError, with: :render_unauthorized_responseO
 
   def current_user
     @current_user ||= find_authorized_user

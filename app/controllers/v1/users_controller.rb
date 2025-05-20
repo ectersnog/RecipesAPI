@@ -14,7 +14,7 @@ module V1
 
     def update
       Users::Update.call(current_user: current_user, params: update_params)
-      render locals: { user: current_user}
+      render locals: { user: current_user }
     rescue ActiveRecord::RecordInvalid => e
       render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
     end
