@@ -3,6 +3,16 @@
 module V1
   class UsersController < ApplicationController
     before_action :authorize, only: [:update]
+
+    def show
+      user = Users::Show.call(current_user: current_user, params:)
+      if user
+        render locals: { current_user: current_user, user: }
+      else
+        render json: { errors: 'User not found' }, status: :unprocessable_entity
+      end
+    end
+
     def create
       user = Users::Create.call(params:)
       if user.persisted?
@@ -17,15 +27,6 @@ module V1
       render locals: { user: current_user }
     rescue ActiveRecord::RecordInvalid => e
       render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
-    end
-
-    def show
-      user = Users::Show.call(current_user: current_user, params:)
-      if user
-        render locals: { current_user: current_user, user: }
-      else
-        render json: { errors: 'User not found' }, status: :unprocessable_entity
-      end
     end
 
     private

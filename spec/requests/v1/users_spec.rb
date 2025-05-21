@@ -21,7 +21,6 @@ RSpec.describe 'v1/users' do
   end
 
   path '/v1/users/{id}' do
-
     get('show user authenticated') do
       parameter name: :id, in: :path, type: :string
 
@@ -41,7 +40,6 @@ RSpec.describe 'v1/users' do
 
         run_test!(openapi_all_parameters_required: true)
       end
-
     end
 
     get('show user not authenticated') do
@@ -55,7 +53,6 @@ RSpec.describe 'v1/users' do
         run_test!(openapi_all_parameters_required: true)
       end
     end
-
   end
 
   path '/v1/users/update' do
