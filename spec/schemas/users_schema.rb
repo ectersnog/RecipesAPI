@@ -43,6 +43,47 @@ module Schemas
               }
             }
           }
+        },
+        user_update: {
+          type: :object,
+          properties: {
+            data: {
+              type: :object,
+              properties: {
+                id: { type: :string,
+                      format: :uuid,
+                      example: '123e4567-e89b-12d3-a456-426614174000' },
+                name: { type: :string },
+                email: { type: :string }
+              }
+            }
+          }
+        },
+        user_show_response_authenticated: {
+          type: :object,
+          properties: {
+            data: {
+              type: :object,
+              properties: {
+                id: { type: :string,
+                      format: :uuid,
+                      example: '123e4567-e89b-12d3-a456-426614174000' },
+                name: { type: :string },
+                email: { type: :string }
+              }
+            }
+          }
+        },
+        user_show_response_not_authenticated: {
+          type: :object,
+          properties: {
+            data: {
+              type: :object,
+              properties: {
+                name: { type: :string }
+              }
+            }
+          }
         }
       }
     end

@@ -20,6 +20,44 @@ RSpec.describe 'v1/users' do
     end
   end
 
+  path '/v1/users/{id}' do
+
+    get('show user authenticated') do
+      parameter name: :id, in: :path, type: :string
+
+      consumes 'application/json'
+      produces 'application/json'
+      security [bearer_auth: []]
+
+      let(:data) do
+        { data: { name: 'john' } }
+      end
+
+      let(:Authorization) { login_token }
+
+      response 200, 'successful' do
+        let(:id) { current_user.id }
+        schema "$ref" => "#/components/schemas/user_show_response_authenticated"
+
+        run_test!(openapi_all_parameters_required: true)
+      end
+
+    end
+
+    get('show user not authenticated') do
+      parameter name: :id, in: :path, type: :string
+
+      let(:user) { create(:user) }
+
+      response 200, 'successful' do
+        let(:id) { user.id }
+
+        run_test!(openapi_all_parameters_required: true)
+      end
+    end
+
+  end
+
   path '/v1/users/update' do
     put('update user') do
       parameter name: :data, in: :body, required: true, schema: {
