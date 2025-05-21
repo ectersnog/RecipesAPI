@@ -13,8 +13,9 @@ RSpec.describe 'v1/users' do
         let(:name) { FFaker::Name.first_name }
         let(:email) { FFaker::Internet.email }
         let(:password) { FFaker::Internet.password }
+        schema "$ref" => '#/components/schemas/user_create_response'
 
-        run_test!
+        run_test!(openapi_all_parameters_required: true)
       end
     end
   end
@@ -22,7 +23,7 @@ RSpec.describe 'v1/users' do
   path '/v1/users/update' do
     put('update user') do
       parameter name: :data, in: :body, required: true, schema: {
-        "$ref" => "#/components/schemas/user"
+        "$ref" => "#/components/schemas/user_update"
       }
 
       consumes 'application/json'
@@ -36,7 +37,8 @@ RSpec.describe 'v1/users' do
       let(:Authorization) { login_token }
 
       response '200', 'successful' do
-        run_test!
+        schema "$ref" => "#/components/schemas/user_update_response"
+        run_test!(openapi_all_parameters_required: true)
       end
     end
   end

@@ -19,6 +19,10 @@ module V1
       render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
     end
 
+    def show
+      Users::Show.call(current_user: current_user, params:)
+    end
+
     private
 
     def update_params
