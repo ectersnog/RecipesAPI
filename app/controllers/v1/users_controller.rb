@@ -20,7 +20,12 @@ module V1
     end
 
     def show
-      Users::Show.call(current_user: current_user, params:)
+      user = Users::Show.call(current_user: current_user, params:)
+      if user
+        render locals: { current_user: current_user, user: }
+      else
+        render json: { errors: 'User not found' }, status: :unprocessable_entity
+      end
     end
 
     private

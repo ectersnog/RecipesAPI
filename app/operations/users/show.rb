@@ -8,7 +8,7 @@ module Users
     end
 
     def call
-
+      User.find_by(id: @params[:id])
     end
   end
 end
