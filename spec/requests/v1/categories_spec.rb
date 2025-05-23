@@ -38,6 +38,13 @@ RSpec.describe 'v1/categories' do
 
         run_test!
       end
+
+      response 404, 'not found' do
+        schema "$ref" => '#/components/schemas/error_response'
+        let(:id) { 'invalid' }
+
+        run_test!
+      end
     end
   end
 end

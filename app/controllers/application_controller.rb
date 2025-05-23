@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   rescue_from JWT::ExpiredSignature, with: :render_expired_signature
   rescue_from JWT::VerificationError, with: :render_unauthorized_responseO
 
@@ -36,5 +37,9 @@ class ApplicationController < ActionController::API
 
   def render_unauthorized_response
     render json: { errors: "JWT token verification error" }, status: :unauthorized
+  end
+
+  def render_not_found
+    render json: { errors: 'Not Found' }, status: :not_found
   end
 end
