@@ -172,15 +172,21 @@ components:
         data:
           type: object
           properties:
-            id:
-              type: string
-              format: uuid
-              example: 123e4567-e89b-12d3-a456-426614174000
             name:
               type: string
             email:
               type: string
-    user_show_response_authenticated:
+            password:
+              type: string
+    user_show_response:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+    profile_show_response:
       type: object
       properties:
         data:
@@ -188,19 +194,26 @@ components:
           properties:
             id:
               type: string
-              format: uuid
-              example: 123e4567-e89b-12d3-a456-426614174000
             name:
               type: string
             email:
               type: string
-    user_show_response_not_authenticated:
+    profile_show_error_response:
       type: object
       properties:
-        data:
-          type: object
-          properties:
-            name:
+        errors:
+          type: string
+    error_response:
+      oneOf:
+      - type: object
+        properties:
+          errors:
+            type: string
+      - type: object
+        properties:
+          errors:
+            type: array
+            items:
               type: string
 paths:
   "/v1/categories":
@@ -232,6 +245,22 @@ paths:
       responses:
         '200':
           description: successful
+        '404':
+          description: not found
+  "/v1/profile/me":
+    get:
+      summary: show user profile not logged in
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/profile_show_response"
+        '401':
+          description: unauthorized
   "/v1/recipes":
     get:
       summary: list recipes
@@ -261,6 +290,8 @@ paths:
       responses:
         '200':
           description: successful
+        '404':
+          description: not found
   "/v1/users":
     post:
       summary: create user
@@ -282,22 +313,18 @@ paths:
           description: user created
   "/v1/users/{id}":
     get:
-      summary: show user not authenticated
+      summary: show user
       parameters:
       - name: id
         in: path
         required: true
         schema:
           type: string
-      security:
-      - bearer_auth: []
       responses:
         '200':
           description: successful
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/user_show_response_authenticated"
+        '404':
+          description: errors
   "/v1/users/update":
     put:
       summary: update user
