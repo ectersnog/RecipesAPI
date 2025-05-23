@@ -9,7 +9,7 @@ module V1
       if user
         render locals: { current_user:, user: }
       else
-        render json: { errors: 'User not found' }, status: :unprocessable_entity
+        render json: { errors: 'User not found' }, status: :not_found
       end
     end
 

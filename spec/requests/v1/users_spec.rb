@@ -33,7 +33,7 @@ RSpec.describe 'v1/users' do
         run_test!
       end
 
-      response 422, 'errors' do
+      response 404, 'errors' do
         let(:id) { 'invalid' }
         run_test!
       end

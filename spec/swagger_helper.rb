@@ -36,7 +36,8 @@ RSpec.configure do |config|
           Schemas::Recipes.schema,
           Schemas::Meta.schema,
           Schemas::Users.schema,
-          Schemas::Profiles.schema
+          Schemas::Profiles.schema,
+          Schemas::Errors.schema
         ].inject(:merge)
       },
       paths: {},
