@@ -8,6 +8,7 @@ RSpec.configure do |config|
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
   # to ensure that it's configured to serve Swagger from the same folder
   config.openapi_root = Rails.root.join('swagger').to_s
+  config.openapi_all_properties_required = true
 
   # Define one or more Swagger documents and provide global metadata for each one
   # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
@@ -34,7 +35,8 @@ RSpec.configure do |config|
           Schemas::Categories.schema,
           Schemas::Recipes.schema,
           Schemas::Meta.schema,
-          Schemas::Users.schema
+          Schemas::Users.schema,
+          Schemas::Profiles.schema
         ].inject(:merge)
       },
       paths: {},

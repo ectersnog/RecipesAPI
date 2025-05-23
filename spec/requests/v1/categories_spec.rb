@@ -21,7 +21,7 @@ RSpec.describe 'v1/categories' do
           create(:category, name: 'Pizza')
         end
 
-        run_test!(openapi_all_properties_required: true)
+        run_test!
       end
     end
   end
@@ -36,7 +36,7 @@ RSpec.describe 'v1/categories' do
         let(:category) { create(:category) }
         let(:id) { category.id }
 
-        run_test!(openapi_all_properties_required: true)
+        run_test!
       end
     end
   end

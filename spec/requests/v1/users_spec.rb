@@ -15,42 +15,27 @@ RSpec.describe 'v1/users' do
         let(:password) { FFaker::Internet.password }
         schema "$ref" => '#/components/schemas/user_create_response'
 
-        run_test!(openapi_all_properties_required: true)
+        run_test!
       end
     end
   end
 
   path '/v1/users/{id}' do
-    get('show user authenticated') do
-      parameter name: :id, in: :path, type: :string
-
-      consumes 'application/json'
-      produces 'application/json'
-      security [bearer_auth: []]
-
-      let(:data) do
-        { data: { name: 'john' } }
-      end
-
-      let(:Authorization) { login_token }
-
-      response 200, 'successful' do
-        let(:id) { current_user.id }
-        schema "$ref" => "#/components/schemas/user_show_response_authenticated"
-
-        run_test!(openapi_all_properties_required: true)
-      end
-    end
-
-    get('show user not authenticated') do
+    get('show user') do
       parameter name: :id, in: :path, type: :string
 
       let(:user) { create(:user) }
 
       response 200, 'successful' do
+        schema "$ref" => "#/components/schemas/user_show_response"
         let(:id) { user.id }
 
-        run_test!(openapi_all_properties_required: true)
+        run_test!
+      end
+
+      response 422, 'errors' do
+        let(:id) { 'invalid' }
+        run_test!
       end
     end
   end
@@ -73,7 +58,7 @@ RSpec.describe 'v1/users' do
 
       response '200', 'successful' do
         schema "$ref" => "#/components/schemas/user_update_response"
-        run_test!(openapi_all_properties_required: true)
+        run_test!
       end
     end
   end

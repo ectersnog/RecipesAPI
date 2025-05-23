@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :recipes, defaults: { format: :json }
     resources :users, defaults: { format: :json }
     resources :sessions, defaults: { format: :json }, only: [:create]
+    get "/profile/me", to: "profiles#show", defaults: { format: :json }
   end
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
