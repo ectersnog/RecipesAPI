@@ -15,7 +15,7 @@ RSpec.describe 'v1/users' do
         let(:password) { FFaker::Internet.password }
         schema "$ref" => '#/components/schemas/user_create_response'
 
-        run_test!(openapi_all_parameters_required: true)
+        run_test!(openapi_all_properties_required: true)
       end
     end
   end
@@ -38,7 +38,7 @@ RSpec.describe 'v1/users' do
         let(:id) { current_user.id }
         schema "$ref" => "#/components/schemas/user_show_response_authenticated"
 
-        run_test!(openapi_all_parameters_required: true)
+        run_test!(openapi_all_properties_required: true)
       end
     end
 
@@ -50,7 +50,7 @@ RSpec.describe 'v1/users' do
       response 200, 'successful' do
         let(:id) { user.id }
 
-        run_test!(openapi_all_parameters_required: true)
+        run_test!(openapi_all_properties_required: true)
       end
     end
   end
@@ -73,7 +73,7 @@ RSpec.describe 'v1/users' do
 
       response '200', 'successful' do
         schema "$ref" => "#/components/schemas/user_update_response"
-        run_test!(openapi_all_parameters_required: true)
+        run_test!(openapi_all_properties_required: true)
       end
     end
   end

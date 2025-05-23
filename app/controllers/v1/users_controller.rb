@@ -5,9 +5,9 @@ module V1
     before_action :authorize, only: [:update]
 
     def show
-      user = Users::Show.call(current_user: current_user, params:)
+      user = Users::Show.call(current_user:, params:)
       if user
-        render locals: { current_user: current_user, user: }
+        render locals: { current_user:, user: }
       else
         render json: { errors: 'User not found' }, status: :unprocessable_entity
       end
@@ -23,7 +23,7 @@ module V1
     end
 
     def update
-      Users::Update.call(current_user: current_user, params: update_params)
+      Users::Update.call(current_user:, params: update_params)
       render locals: { user: current_user }
     rescue ActiveRecord::RecordInvalid => e
       render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity

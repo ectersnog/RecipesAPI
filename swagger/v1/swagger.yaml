@@ -4,6 +4,11 @@ info:
   title: API V1
   version: v1
 components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearer_format: JWT
   schemas:
     category:
       type: object
@@ -121,6 +126,82 @@ components:
       - total_pages
       - records
       - total_records
+    user:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        password_confirmation:
+          type: string
+      required: []
+    user_create_response:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 123e4567-e89b-12d3-a456-426614174000
+            name:
+              type: string
+            email:
+              type: string
+    user_update_response:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 123e4567-e89b-12d3-a456-426614174000
+            name:
+              type: string
+            email:
+              type: string
+    user_update:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 123e4567-e89b-12d3-a456-426614174000
+            name:
+              type: string
+            email:
+              type: string
+    user_show_response_authenticated:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 123e4567-e89b-12d3-a456-426614174000
+            name:
+              type: string
+            email:
+              type: string
+    user_show_response_not_authenticated:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              type: string
 paths:
   "/v1/categories":
     get:
@@ -180,6 +261,62 @@ paths:
       responses:
         '200':
           description: successful
+  "/v1/users":
+    post:
+      summary: create user
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: email
+        in: query
+        schema:
+          type: string
+      - name: password
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: user created
+  "/v1/users/{id}":
+    get:
+      summary: show user not authenticated
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/user_show_response_authenticated"
+  "/v1/users/update":
+    put:
+      summary: update user
+      parameters: []
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/user_update_response"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/user_update"
+        required: true
 servers:
 - url: http://{defaultHost}
   variables:
