@@ -9,13 +9,23 @@ RSpec.describe 'v1/users' do
       parameter name: :email, in: :query, type: :string
       parameter name: :password, in: :query, type: :string
 
-      response '200', 'user created' do
+      response 200, 'user created' do
         let(:name) { FFaker::Name.first_name }
         let(:email) { FFaker::Internet.email }
         let(:password) { FFaker::Internet.password }
         schema "$ref" => '#/components/schemas/user_create_response'
 
         run_test!
+      end
+
+      response 422, 'unprocessable entity' do
+        let(:name) { nil }
+        let(:email) { FFaker::Internet.email }
+        let(:password) { nil }
+        schema "$ref" => '#/components/schemas/error_response'
+        run_test! do |response|
+          puts response.body
+        end
       end
     end
   end
