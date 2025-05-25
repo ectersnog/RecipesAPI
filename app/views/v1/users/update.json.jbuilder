@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 json.data do
-  json.call(user, :id, :name, :email)
+  json.call(current_user, :id, :name, :email)
 end

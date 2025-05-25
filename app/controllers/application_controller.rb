@@ -13,7 +13,6 @@ class ApplicationController < ActionController::API
   private
 
   def authorize
-    # binding.pry
     return if current_user.present?
 
     render json: { errors: 'Not Authorized' }, status: :unauthorized

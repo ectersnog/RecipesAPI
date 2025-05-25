@@ -8,7 +8,18 @@ module Users
     end
 
     def call
-      User.find_by(id: @params[:id])
+      step find_user
+    end
+
+    private
+
+    def find_user
+      user = User.find_by(id: @params[:id])
+      if user
+        Success(user)
+      else
+        Failure(:not_found)
+      end
     end
   end
 end

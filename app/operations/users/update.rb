@@ -8,7 +8,17 @@ module Users
     end
 
     def call
-      @current_user.update!(@params)
+      step update_user
+    end
+
+    private
+
+    def update_user
+      if @current_user.update!(@params)
+        Success(@current_user)
+      else
+        Failure(:unprocessable_entity)
+      end
     end
   end
 end

@@ -5,28 +5,35 @@ module V1
     before_action :authorize, only: [:update]
 
     def show
-      user = Users::Show.call(current_user:, params:)
-      if user
+      result = Users::Show.call(current_user:, params:)
+
+      if result.success?
+        user = result.value!
         render locals: { current_user:, user: }
-      else
-        render json: { errors: 'User not found' }, status: :not_found
+      elsif result.failure?
+        render json: { errors: result.failure }, status: :not_found
       end
     end
 
     def create
-      user = Users::Create.call(params:)
-      if user.persisted?
+      result = Users::Create.call(params:)
+
+      if result.success?
+        user = result.value!
         render locals: { user: }
-      else
-        render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+      elsif result.failure?
+        render json: { errors: result.failure }, status: :unprocessable_entity
       end
     end
 
     def update
-      Users::Update.call(current_user:, params: update_params)
-      render locals: { user: current_user }
-    rescue ActiveRecord::RecordInvalid => e
-      render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+      result = Users::Update.call(current_user:, params: update_params)
+
+      if result.success?
+        render locals: { current_user: }
+      elsif result.failure?
+        render json: { errors: result.failure }, status: :unprocessable_entity
+      end
     end
 
     private

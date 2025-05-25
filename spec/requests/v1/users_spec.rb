@@ -23,9 +23,7 @@ RSpec.describe 'v1/users' do
         let(:email) { FFaker::Internet.email }
         let(:password) { nil }
         schema "$ref" => '#/components/schemas/error_response'
-        run_test! do |response|
-          puts response.body
-        end
+        run_test!
       end
     end
   end
