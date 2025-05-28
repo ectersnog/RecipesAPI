@@ -7,10 +7,7 @@ module Users
     end
 
     def call
-      return Failure(:already_exists) if User.exists?(email: @params[:email])
-
       user = step build_user
-      step validate_user(user)
       step save_user(user)
     end
 
@@ -23,14 +20,6 @@ module Users
         password: @params[:password]
       )
       Success(user)
-    end
-
-    def validate_user(user)
-      if user.valid?
-        Success(user)
-      else
-        Failure(user.errors.full_messages)
-      end
     end
 
     def save_user(user)

@@ -8,7 +8,7 @@ module Sessions
 
     def call
       user = User.find_by(email: @params[:email])
-      return unless user && user.authenticate(@params[:password])
+      return Failure(:not_authenticated) unless user && user.authenticate(@params[:password])
 
       JwtLib.token_encode(user)
     end
