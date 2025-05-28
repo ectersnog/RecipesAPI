@@ -19,7 +19,7 @@ RSpec.describe 'v1/recipes' do
           create_list(:recipe, 3)
         end
 
-        run_test!(openapi_all_properties_required: true)
+        run_test!
       end
     end
   end
@@ -34,7 +34,14 @@ RSpec.describe 'v1/recipes' do
         let(:recipe) { create(:recipe) }
         let(:id) { recipe.id }
 
-        run_test!(openapi_all_properties_required: true)
+        run_test!
+      end
+
+      response 404, 'not found' do
+        schema "$ref" => '#/components/schemas/error_response'
+        let(:id) { 'invalid' }
+
+        run_test!
       end
     end
   end
