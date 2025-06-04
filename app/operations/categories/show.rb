@@ -4,8 +4,7 @@ module Categories
   class Show < ApplicationOperation
     def call(params:)
       id = params[:id]
-      category = step find_category(id)
-      category
+      step find_category(id)
     end
 
     private

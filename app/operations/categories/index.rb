@@ -6,8 +6,7 @@ module Categories
       page = params[:page] ||= 1
       per_page = params[:per_page] ||= 10
 
-      categories = step get_index(page, per_page)
-      categories
+      step get_index(page, per_page)
     end
 
     private
