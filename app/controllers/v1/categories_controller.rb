@@ -3,15 +3,21 @@
 module V1
   class CategoriesController < ApplicationController
     def index
-      categories = Categories::Index.call(params:)
-      render locals: { categories: }
+      result = Categories::Index.call(params:)
+      if result.success?
+        render locals: { categories: result.success }
+      elsif result.failure?
+        render json: { errors: result.failure }, status: :not_found
+      end
     end
 
     def show
-      category = Categories::Show.call(
-        category: Category.find(params[:id])
-      )
-      render locals: { category: }
+      result = Categories::Show.call(params:)
+      if result.success?
+        render locals: { category: result.success }
+      elsif result.failure?
+        render json: { errors: result.failure }, status: :not_found
+      end
     end
   end
 end

@@ -2,13 +2,21 @@
 
 module Categories
   class Index < ApplicationOperation
-    def initialize(params:)
-      @page = params[:page].to_i
-      @per_page = params[:per_page].to_i unless params[:per_page].nil?
+    def call(params:)
+      page = params[:page] ||= 1
+      per_page = params[:per_page] ||= 10
+
+      categories = step get_index(page, per_page)
+      categories
     end
 
-    def call
-      Category.order(:name).page(@page).per(@per_page)
+    private
+
+    def get_index(page, per_page)
+      categories = Category.order(:name).page(page).per(per_page)
+      return Failure(:real_problem) unless categories
+
+      Success(categories)
     end
   end
 end

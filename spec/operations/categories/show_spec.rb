@@ -11,8 +11,9 @@ RSpec.describe Categories::Show do
     end
 
     it 'returns a specific record by id' do
-      result = described_class.call(category: cat_a)
-      expect(result.id).to eq(cat_a.id)
+      result = described_class.call(params: { id: cat_a.id })
+      expect(result).to be_success
+      expect(result.value!.id).to eq(cat_a.id)
     end
   end
 end

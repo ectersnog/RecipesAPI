@@ -2,12 +2,18 @@
 
 module Recipes
   class Show < ApplicationOperation
-    def initialize(recipe:)
-      @recipe = recipe
+    def call(params:)
+      id = params[:id]
+      step find_recipe(id)
     end
 
-    def call
-      @recipe
+    private
+
+    def find_recipe(id)
+      recipe = Recipe.find_by(id:)
+      return Failure(:not_found) unless recipe
+
+      Success(recipe)
     end
   end
 end

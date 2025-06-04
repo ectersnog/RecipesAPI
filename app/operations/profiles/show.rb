@@ -3,7 +3,7 @@
 module Profiles
   class Show < ApplicationOperation
     def call(user:)
-      user
+      Success(user)
     end
   end
 end

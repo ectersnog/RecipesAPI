@@ -10,11 +10,13 @@ RSpec.describe Recipes::Index do
 
     it 'returns specific page of results' do
       result = described_class.call(params: { page: 1, per_page: 2 })
-      expect(result.length).to eq(2)
-      expect(result).to include(rec_a, rec_b)
+      expect(result).to be_success
+      expect(result.value!.length).to eq(2)
+      expect(result.value!).to include(rec_a, rec_b)
 
       result = described_class.call(params: { page: 2, per_page: 2 })
-      expect(result.first.name).to eq(rec_c.name)
+      expect(result).to be_success
+      expect(result.value!.first.name).to eq(rec_c.name)
     end
   end
 end
