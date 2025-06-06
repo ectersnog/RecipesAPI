@@ -19,5 +19,29 @@ module V1
         render json: { errors: result.failure }, status: :not_found
       end
     end
+
+    def create
+      result = Recipes::Create.call(
+        current_user:,
+        params: params.expect(data: [
+          :name,
+          :nutritional_info,
+          :description,
+          { ingredients: [] },
+          { steps: [] },
+          :is_gluten_free,
+          :is_carb_free,
+          :is_kosher,
+          :is_paleo,
+          :is_vegetarian,
+          :is_vegan
+        ])
+      )
+      if result.success?
+        render 'show', locals: { recipe: result.success }
+      elsif result.failure?
+        render json: { errors: result.failure }, status: :unprocessable_entity
+      end
+    end
   end
 end

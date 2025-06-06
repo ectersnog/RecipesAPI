@@ -5,14 +5,14 @@ module Tokens
     def call(params:)
       user = User.find_by(email: params[:email])
       password = params[:password]
-      step check_auth_and_user(user, password)
+      step check_auth_and_user(user:, password:)
     end
 
     private
 
-    def check_auth_and_user(user, password)
+    def check_auth_and_user(user:, password:)
       if user && user.authenticate(password)
-        Success(JwtLib.token_encode(user))
+        return Success(JwtLib.token_encode(user))
       end
       Failure(:not_found)
     end
