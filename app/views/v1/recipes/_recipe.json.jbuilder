@@ -3,6 +3,7 @@
 json.id recipe.id
 json.name recipe.name
 json.user_id recipe.user_id
+json.ingredients recipe.ingredients
 json.nutritional_info recipe.nutritional_info
 json.description recipe.description
 json.steps recipe.steps
