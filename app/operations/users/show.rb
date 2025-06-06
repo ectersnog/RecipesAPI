@@ -3,19 +3,13 @@
 module Users
   class Show < ApplicationOperation
     def call(params:)
-      id = params[:id]
-      step find_user(id)
+      step find_user(params:)
     end
 
     private
 
-    def find_user(id)
-      user = User.find_by(id:)
-      if user
-        Success(user)
-      else
-        Failure(:not_found)
-      end
+    def find_user(params:)
+      Success(Users.find(params[:id]))
     end
   end
 end

@@ -3,17 +3,13 @@
 module Recipes
   class Show < ApplicationOperation
     def call(params:)
-      id = params[:id]
-      step find_recipe(id)
+      step find_recipe(params:)
     end
 
     private
 
-    def find_recipe(id)
-      recipe = Recipe.find_by(id:)
-      return Failure(:not_found) unless recipe
-
-      Success(recipe)
+    def find_recipe(params:)
+      Success(Recipe.find(params[:id]))
     end
   end
 end

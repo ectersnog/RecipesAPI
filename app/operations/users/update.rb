@@ -9,10 +9,10 @@ module Users
     private
 
     def update_user(current_user:, params:)
-      if current_user.update!(params)
+      if current_user.update(params)
         Success(current_user)
       else
-        Failure('Users::Create')
+        Failure(current_user.errors)
       end
     end
   end

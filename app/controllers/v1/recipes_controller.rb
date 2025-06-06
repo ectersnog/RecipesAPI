@@ -23,25 +23,31 @@ module V1
     def create
       result = Recipes::Create.call(
         current_user:,
-        params: params.expect(data: [
-          :name,
-          :nutritional_info,
-          :description,
-          { ingredients: [] },
-          { steps: [] },
-          :is_gluten_free,
-          :is_carb_free,
-          :is_kosher,
-          :is_paleo,
-          :is_vegetarian,
-          :is_vegan
-        ])
+        params: create_params
       )
       if result.success?
         render 'show', locals: { recipe: result.success }
       elsif result.failure?
         render json: { errors: result.failure }, status: :unprocessable_entity
       end
+    end
+
+    private
+
+    def create_params
+      params.expect(data: [
+        :name,
+        :nutritional_info,
+        :description,
+        { ingredients: [] },
+        { steps: [] },
+        :is_gluten_free,
+        :is_carb_free,
+        :is_kosher,
+        :is_paleo,
+        :is_vegetarian,
+        :is_vegan
+      ])
     end
   end
 end

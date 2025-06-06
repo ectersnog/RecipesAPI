@@ -18,7 +18,7 @@ module Recipes
     end
 
     def create_recipe_ingredients(recipe:, ingredients:)
-      ingredients.map do |ingredient|
+      ingredients.each do |ingredient|
         recipe_ingredient = RecipeIngredient.new(recipe:, input: ingredient)
         return Failure(:recipe_ingredient_create) unless recipe_ingredient.save
       end

@@ -311,6 +311,8 @@ paths:
       responses:
         '200':
           description: user created
+        '422':
+          description: unprocessable entity
   "/v1/users/{id}":
     get:
       summary: show user

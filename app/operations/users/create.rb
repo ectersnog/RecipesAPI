@@ -3,17 +3,13 @@
 module Users
   class Create < ApplicationOperation
     def call(params:)
-      name = params[:name]
-      email = params[:email]
-      password = params[:password]
-
-      step create_user(name, email, password)
+      step create_user(params:)
     end
 
     private
 
-    def create_user(name, email, password)
-      user = User.new(name:, email:, password:)
+    def create_user(params:)
+      user = User.new(params:)
       if user.save
         Success(user)
       else
