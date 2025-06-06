@@ -21,7 +21,6 @@ module Recipes
       ingredients.map do |ingredient|
         recipe_ingredient = RecipeIngredient.new(recipe:, input: ingredient)
         return Failure(:recipe_ingredient_create) unless recipe_ingredient.save
-
       end
       Success(recipe)
     end

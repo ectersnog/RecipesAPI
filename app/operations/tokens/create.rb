@@ -14,6 +14,7 @@ module Tokens
       if user && user.authenticate(password)
         return Success(JwtLib.token_encode(user))
       end
+
       Failure(:not_found)
     end
   end
