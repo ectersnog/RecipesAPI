@@ -9,7 +9,7 @@ module Users
     private
 
     def create_user(params:)
-      user = User.new(params:)
+      user = User.new(name: params[:name], email: params[:email], password: params[:password])
       if user.save
         Success(user)
       else

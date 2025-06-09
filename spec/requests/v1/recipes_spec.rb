@@ -22,6 +22,42 @@ RSpec.describe 'v1/recipes' do
         run_test!
       end
     end
+
+    post('create recipe') do
+      parameter name: :data, in: :body, required: true, schema: {
+        "$ref" => '#/components/schemas/recipes_create'
+      }
+
+      consumes 'application/json'
+      produces 'application/json'
+      security [bearer_auth: []]
+
+      let(:Authorization) { login_token }
+      let(:data) do
+        { data:
+          {
+            name: 'mac and cheese',
+            description: 'mac and cheese',
+            ingredients: ['1 cup of noodles', '8 ounces of water', '1 lb of cheese'],
+            is_gluten_free: false,
+            is_carb_free: false,
+            is_kosher: false,
+            is_paleo: false,
+            is_vegetarian: false,
+            is_vegan: false
+          } }
+      end
+
+      # doesn't work
+      # let(:data) do
+      #   { data: attributes_for(:recipe) }
+      # end
+
+      response 200, 'successful' do
+        schema "$ref" => '#/components/schemas/recipe'
+        run_test!
+      end
+    end
   end
 
   path '/v1/recipes/{id}' do

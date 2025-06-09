@@ -64,7 +64,7 @@ RSpec.describe 'v1/users' do
 
       let(:Authorization) { login_token }
 
-      response '200', 'successful' do
+      response 200, 'successful' do
         schema "$ref" => "#/components/schemas/user_update_response"
         run_test!
       end

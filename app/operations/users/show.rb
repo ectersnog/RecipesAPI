@@ -9,7 +9,7 @@ module Users
     private
 
     def find_user(params:)
-      Success(Users.find(params[:id]))
+      Success(User.find(params[:id]))
     end
   end
 end
