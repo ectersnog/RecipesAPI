@@ -3,17 +3,13 @@
 module Recipes
   class Index < ApplicationOperation
     def call(params:)
-      page = params[:page] ||= 1
-      per_page = params[:per_page] ||= 10
-      step get_recipes(page, per_page)
+      step get_recipes(params:)
     end
 
     private
 
-    def get_recipes(page, per_page)
-      recipes = RecipeQuery.new.paginate(page:, per_page:)
-      return Failure(:not_found) unless recipes
-
+    def get_recipes(params:)
+      recipes = RecipeQuery.new.paginate(params[:page], params[:per_page])
       Success(recipes)
     end
   end

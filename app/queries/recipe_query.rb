@@ -34,7 +34,7 @@ class RecipeQuery
     @scope.joins(:recipe_ingredients).where(recipe_ingredients: { ingredient_id: ingredient_ids })
   end
 
-  def paginate(page: 1, per_page: 10)
+  def paginate(page = 1, per_page = 10)
     @scope.order(:name).page(page).per(per_page)
   end
 end
