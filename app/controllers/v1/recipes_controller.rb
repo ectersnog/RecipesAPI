@@ -46,8 +46,8 @@ module V1
         :is_vegetarian,
         :is_vegan,
         :cover_photo,
-        ingredients: [],
-        steps: []
+        { ingredients: [] }, # linter was failing
+        { steps: [] } # linter was failing
       ])
     end
   end
