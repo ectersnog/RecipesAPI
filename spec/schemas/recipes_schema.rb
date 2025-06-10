@@ -69,7 +69,9 @@ module Schemas
                 created_at: { type: :string,
                   format: 'date-time' },
                 updated_at: { type: :string,
-                  format: 'date-time' }
+                  format: 'date-time' },
+                cover_photo: { type: :string,
+                  format: :binary }
               }
             }
           }

@@ -24,34 +24,35 @@ RSpec.describe 'v1/recipes' do
     end
 
     post('create recipe') do
-      parameter name: :data, in: :body, required: true, schema: {
+      parameter name: :data, in: :formData, required: true, schema: {
         "$ref" => '#/components/schemas/recipes_create'
       }
 
-      consumes 'application/json'
+      consumes 'multipart/form-data'
+      # parameter name: :data, in: :formData, schema: {
+      #   type: :object,
+      #   properties: {
+      #     data: {
+      #       type: :object,
+      #       properties: {
+      #         cover_photo: { type: :file }
+      #       }
+      #     }
+      #   }
+      # }
+      # parameter name: :'data[cover_photo]', in: :formData, type: :file, required: true
+
+      # consumes 'application/json'
       produces 'application/json'
       security [bearer_auth: []]
 
       let(:Authorization) { login_token }
       let(:data) do
-        { data:
-          {
-            name: 'mac and cheese',
-            description: 'mac and cheese',
-            ingredients: ['1 cup of noodles', '8 ounces of water', '1 lb of cheese'],
-            is_gluten_free: false,
-            is_carb_free: false,
-            is_kosher: false,
-            is_paleo: false,
-            is_vegetarian: false,
-            is_vegan: false
-          } }
+        attributes_for(:recipe).merge(
+            ingredients: ['1 lb of nachos'],
+            cover_photo: Rack::Test::UploadedFile.new(Rails.root.join('spec/media/image.jpg'))
+          )
       end
-
-      # doesn't work
-      # let(:data) do
-      #   { data: attributes_for(:recipe) }
-      # end
 
       response 200, 'successful' do
         schema "$ref" => '#/components/schemas/recipe'

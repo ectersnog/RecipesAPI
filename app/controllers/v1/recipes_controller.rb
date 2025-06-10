@@ -39,14 +39,15 @@ module V1
         :name,
         :nutritional_info,
         :description,
-        { ingredients: [] },
-        { steps: [] },
         :is_gluten_free,
         :is_carb_free,
         :is_kosher,
         :is_paleo,
         :is_vegetarian,
-        :is_vegan
+        :is_vegan,
+        :cover_photo,
+        ingredients: [],
+        steps: []
       ])
     end
   end

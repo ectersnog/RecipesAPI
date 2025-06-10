@@ -92,7 +92,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_09_174552) do
     t.string "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "cover_photo", default: {}
+    t.json "cover_photo_data"
     t.index ["slug"], name: "index_recipes_on_slug", unique: true
   end
 
