@@ -19,7 +19,44 @@ RSpec.describe 'v1/recipes' do
           create_list(:recipe, 3)
         end
 
-        run_test!(openapi_all_properties_required: true)
+        run_test!
+      end
+    end
+
+    post('create recipe') do
+      parameter name: :data, in: :formData, required: true, schema: {
+        "$ref" => '#/components/schemas/recipes_create'
+      }
+
+      consumes 'multipart/form-data'
+      # parameter name: :data, in: :formData, schema: {
+      #   type: :object,
+      #   properties: {
+      #     data: {
+      #       type: :object,
+      #       properties: {
+      #         cover_photo: { type: :file }
+      #       }
+      #     }
+      #   }
+      # }
+      # parameter name: :'data[cover_photo]', in: :formData, type: :file, required: true
+
+      # consumes 'application/json'
+      produces 'application/json'
+      security [bearer_auth: []]
+
+      let(:Authorization) { login_token }
+      let(:data) do
+        attributes_for(:recipe).merge(
+            ingredients: ['1 lb of nachos'],
+            cover_photo: Rack::Test::UploadedFile.new(Rails.root.join('spec/media/image.jpg'))
+          )
+      end
+
+      response 200, 'successful' do
+        schema "$ref" => '#/components/schemas/recipe'
+        run_test!
       end
     end
   end
@@ -34,7 +71,14 @@ RSpec.describe 'v1/recipes' do
         let(:recipe) { create(:recipe) }
         let(:id) { recipe.id }
 
-        run_test!(openapi_all_properties_required: true)
+        run_test!
+      end
+
+      response 404, 'not found' do
+        schema "$ref" => '#/components/schemas/error_response'
+        let(:id) { 'invalid' }
+
+        run_test!
       end
     end
   end
