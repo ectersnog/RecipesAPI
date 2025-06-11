@@ -6,7 +6,11 @@ json.user_id recipe.user_id
 json.ingredients recipe.ingredients
 json.nutritional_info recipe.nutritional_info
 json.description recipe.description
-json.steps recipe.steps
+json.steps recipe.steps do |step|
+  json.position step.position
+  json.description step.description
+end
+# json.steps recipe.steps.map(&:position) recipe.steps.map(&:description)
 json.is_gluten_free recipe.is_gluten_free
 json.is_carb_free recipe.is_carb_free
 json.is_kosher recipe.is_kosher

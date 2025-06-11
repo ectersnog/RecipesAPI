@@ -14,9 +14,36 @@ module Schemas
             user_id: { type: :string,
               format: :uuid,
               example: '123e4567-e89b-12d3-a456-426614174000' },
+            ingredients: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  id: { type: :string,
+                    format: :uuid,
+                    example: '123e4567-e89b-12d3-a456-426614174000' },
+                  name: { type: :string },
+                  nutritional_info: {},
+                  slug: { type: :string },
+                  created_at: { type: :string,
+                    format: 'date-time' },
+                  updated_at: { type: :string,
+                    format: 'date-time' },
+                  state: { type: :string }
+                }
+              }
+            },
             description: { type: :string },
-            steps: { type: :array,
-              items: { type: :string } },
+            steps: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  position: { type: :integer },
+                  description: { type: :string }
+                }
+              }
+            },
             is_gluten_free: { type: :boolean },
             is_carb_free: { type: :boolean },
             is_kosher: { type: :boolean },
@@ -57,8 +84,6 @@ module Schemas
                   format: :uuid,
                   example: '123e4567-e89b-12d3-a456-426614174000' },
                 description: { type: :string },
-                steps: { type: :array,
-                  items: { type: :string } },
                 is_gluten_free: { type: :boolean },
                 is_carb_free: { type: :boolean },
                 is_kosher: { type: :boolean },

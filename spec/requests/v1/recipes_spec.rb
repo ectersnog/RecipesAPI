@@ -50,6 +50,7 @@ RSpec.describe 'v1/recipes' do
       let(:data) do
         attributes_for(:recipe).merge(
             ingredients: ['1 lb of nachos'],
+            steps: ['boil water'],
             cover_photo: Rack::Test::UploadedFile.new(Rails.root.join('spec/media/image.jpg'))
           )
       end
