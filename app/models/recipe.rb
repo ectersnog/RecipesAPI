@@ -17,6 +17,9 @@ class Recipe < ApplicationRecord
     through: :recipe_ingredients
   has_many :recipe_images,
     dependent: :destroy
+  has_many :steps,
+    class_name: 'RecipeStep',
+    dependent: :destroy
 
   validates :name,
     length: { maximum: 100 },

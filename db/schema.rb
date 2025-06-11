@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_09_174552) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_11_210541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -77,6 +77,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_09_174552) do
     t.index ["recipe_id", "ingredient_id"], name: "index_recipe_ingredients_on_recipe_id_and_ingredient_id", unique: true
   end
 
+  create_table "recipe_steps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "recipe_id", null: false
+    t.integer "position", default: 0, null: false
+    t.text "description"
+    t.json "image_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipe_id"], name: "index_recipe_steps_on_recipe_id"
+  end
+
   create_table "recipes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.uuid "user_id", null: false
@@ -114,5 +124,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_09_174552) do
   add_foreign_key "recipe_images", "recipes"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
+  add_foreign_key "recipe_steps", "recipes"
   add_foreign_key "recipes", "users"
 end
