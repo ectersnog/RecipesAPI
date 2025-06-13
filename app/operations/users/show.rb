@@ -2,6 +2,13 @@
 
 module Users
   class Show < ApplicationOperation
+    # Get a User record from the database
+    #
+    # @param params [Hash]
+    # @option params [String] :id The UUID of the user to return
+    #
+    # @return [User] The desired User object
+    #
     def call(params:)
       step find_user(params:)
     end

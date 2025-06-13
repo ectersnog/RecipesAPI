@@ -2,7 +2,18 @@
 
 module Profiles
   class Show < ApplicationOperation
+    # Returns the information for current_user
+    #
+    # @param user [User] User to return profile for
+    #
+    # @return [User] User object
     def call(user:)
+      step get_profile(user:)
+    end
+
+    private
+
+    def get_profile(user:)
       Success(user)
     end
   end

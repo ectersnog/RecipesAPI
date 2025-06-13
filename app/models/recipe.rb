@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Recipe < ApplicationRecord
+  # @!parse include ImageUploader::Attachment.new(:image)
   include ImageUploader::Attachment.new(:cover_photo)
   extend FriendlyId
 

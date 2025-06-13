@@ -2,6 +2,14 @@
 
 module Users
   class Create < ApplicationOperation
+    # Creates a new user
+    #
+    # @param params [Hash]
+    # @option params [String] :name Name of the user
+    # @option params [String] :email Email address for user
+    # @option params [String] :password Password for user
+    #
+    # @return [User] User object on success, error messages on failure
     def call(params:)
       step create_user(params:)
     end

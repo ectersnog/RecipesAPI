@@ -2,6 +2,13 @@
 
 module Recipes
   class Index < ApplicationOperation
+    # Gets Recipes from Database
+    #
+    # @param params [Hash]
+    # @option params [Integer] :page The page of results to return
+    # @option params [Integer] :per_page The number of elements to return on the page
+    #
+    # @return [Array<Recipes>] an array of recipes
     def call(params:)
       step get_recipes(params:)
     end
