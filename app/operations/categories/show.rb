@@ -16,6 +16,8 @@ module Categories
 
     def find_category(id)
       category = Category.find_by(id:)
+      return Failure(:not_found) if category.nil?
+
       Success(category)
     end
   end
