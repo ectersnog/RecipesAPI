@@ -6,7 +6,7 @@ module V1
       result = Recipes::Index.call(params:)
       if result.success?
         render locals: { recipes: result.success }
-      elsif result.failure?
+      else
         render json: { errors: result.failure }
       end
     end
@@ -15,7 +15,7 @@ module V1
       result = Recipes::Show.call(params:)
       if result.success?
         render locals: { recipe: result.success }
-      elsif result.failure?
+      else
         render json: { errors: result.failure }, status: :not_found
       end
     end
@@ -27,7 +27,7 @@ module V1
       )
       if result.success?
         render 'show', locals: { recipe: result.success }
-      elsif result.failure?
+      else
         render json: { errors: result.failure }, status: :unprocessable_entity
       end
     end

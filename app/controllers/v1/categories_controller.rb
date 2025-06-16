@@ -6,7 +6,7 @@ module V1
       result = Categories::Index.call(params:)
       if result.success?
         render locals: { categories: result.success }
-      elsif result.failure?
+      else
         render json: { errors: result.failure }, status: :not_found
       end
     end
@@ -15,7 +15,7 @@ module V1
       result = Categories::Show.call(params:)
       if result.success?
         render locals: { category: result.success }
-      elsif result.failure?
+      else
         render json: { errors: result.failure }, status: :not_found
       end
     end

@@ -9,7 +9,7 @@ module V1
 
       if result.success?
         render locals: { user: result.success }
-      elsif result.failure?
+      else
         render json: { errors: result.failure }, status: :not_found
       end
     end
@@ -19,7 +19,7 @@ module V1
 
       if result.success?
         render locals: { user: result.success }
-      elsif result.failure?
+      else
         render json: { errors: result.failure }, status: :unprocessable_entity
       end
     end
@@ -32,7 +32,7 @@ module V1
 
       if result.success?
         render locals: { current_user: }
-      elsif result.failure?
+      else
         render json: { errors: result.failure }, status: :unprocessable_entity
       end
     end
