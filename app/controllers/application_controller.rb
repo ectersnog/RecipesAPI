@@ -6,6 +6,8 @@ class ApplicationController < ActionController::API
   rescue_from JWT::ExpiredSignature, with: :render_expired_signature
   rescue_from JWT::VerificationError, with: :render_unauthorized
 
+  # Method for getting currently logged-in user
+  # @return [User] The currently logged-in user
   def current_user
     @current_user ||= find_authorized_user
   end

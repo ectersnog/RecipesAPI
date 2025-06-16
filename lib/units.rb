@@ -3,7 +3,7 @@
 class Units
   # Gets a list of acceptable measurements from the Ingreedy gem
   #
-  # @return [Symbol] list of measurements
+  # @return [Array<Symbol>] list of measurements
   def self.all
     Ingreedy.dictionaries.current.units.keys
   end
