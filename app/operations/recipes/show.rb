@@ -6,8 +6,8 @@ module Recipes
     #
     # @param params [Hash]
     # @option params [String] :id The UUID of the recipe to return
-    #
-    # @return [Recipe] Recipe object
+    # @raise ActiveRecord::RecordNotFound
+    # @return [Dry::Monads::Result::Success<Recipe>]
     def call(params:)
       step find_recipe(params:)
     end

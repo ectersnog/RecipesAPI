@@ -6,7 +6,7 @@ module Profiles
     #
     # @param user [User] User to return profile for
     #
-    # @return [User] User object
+    # @return [Dry::Monads::Result::Success<User>]
     def call(user:)
       step get_profile(user:)
     end

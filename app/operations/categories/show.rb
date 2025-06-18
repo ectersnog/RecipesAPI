@@ -6,8 +6,8 @@ module Categories
     #
     # @param params [Hash]
     # @option params [String] :id The UUID of the category to have returned
-    #
-    # @return [Category] Category object
+    # @raise ActiveRecord::RecordNotFound
+    # @return [Dry::Monads::Result::Success<Category>]
     def call(params:)
       step find_category(params[:id])
     end
@@ -15,8 +15,7 @@ module Categories
     private
 
     def find_category(id)
-      category = Category.find_by(id:)
-      return Failure(:not_found) if category.nil?
+      category = Category.find(id)
 
       Success(category)
     end

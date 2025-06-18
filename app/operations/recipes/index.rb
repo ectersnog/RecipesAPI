@@ -8,7 +8,7 @@ module Recipes
     # @option params [Integer] :page The page of results to return
     # @option params [Integer] :per_page The number of elements to return on the page
     #
-    # @return [Array<Recipes>] an array of recipes
+    # @return [Dry::Monads::Result::Success<ActiveRecord::Relation<Recipe>>]
     def call(params:)
       step get_recipes(params:)
     end

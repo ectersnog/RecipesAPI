@@ -9,7 +9,7 @@ module Users
     # @option params [String] :email Email address for user
     # @option params [String] :password Password for user
     #
-    # @return [User] User object on success, error messages on failure
+    # @return [Dry::Monads::Result::Success<User>, Dry::Monads::Result::Failure]
     def call(params:)
       step create_user(params:)
     end

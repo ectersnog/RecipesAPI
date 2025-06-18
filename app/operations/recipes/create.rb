@@ -17,8 +17,8 @@ module Recipes
     # @option params [Boolean] :is_vegetarian Is the recipe vegetarian
     # @option params [Boolean] :is_vegan Is the recipe vegan
     #
-    # @return [Recipe] Returns a Recipe object associated with current_user
-    #
+    # @return [Dry::Monads::Result::Success<Recipe>]
+    # @see Recipe
     def call(current_user:, params:)
       ingredients = params.delete(:ingredients)
       recipe = step create_recipe(current_user:, params:)

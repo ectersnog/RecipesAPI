@@ -6,8 +6,8 @@ module Users
     #
     # @param params [Hash]
     # @option params [String] :id The UUID of the user to return
-    #
-    # @return [User] The desired User object
+    # @raise ActiveRecord::RecordNotFound
+    # @return [Dry::Monads::Result::Success<User>]
     #
     def call(params:)
       step find_user(params:)

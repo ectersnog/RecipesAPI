@@ -10,7 +10,7 @@ module Users
     # @option params [String] :email Email address to update user to
     # @option params [String] :password Password to update user to
     #
-    # @return [User, Error] Updated user object on success, errors on failure
+    # @return [Dry::Monads::Result::Success, Dry::Monads::Result::Failure]
     def call(current_user:, params:)
       step update_user(current_user:, params:)
     end
