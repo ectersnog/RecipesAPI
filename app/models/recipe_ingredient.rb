@@ -1,5 +1,37 @@
 # frozen_string_literal: true
 
+# @!attribute [r] id
+#   The unique identifier for the recipe ingredient.
+#   @return [String<UUID>]
+#
+# @!attribute [rw] recipe_id
+#   The unique identifier for the recipe.
+#   @return [String<UUID>]
+#
+# @!attribute [rw] ingredient_id
+#   The unique identifier for the ingredient.
+#   @return [String<UUID>]
+#
+# @!attribute [rw] amount
+#   The amount of the ingredient used in the recipe.
+#   @return [Float]
+#
+# @!attribute [rw] input
+#   The user input for the ingredient, which can be parsed to extract amount and unit.
+#   @return [String]
+#
+# @!attribute [rw] unit
+#   The unit of measurement for the ingredient (e.g., grams, cups).
+#   @return [String]
+#
+# @!attribute [r] created_at
+#   When the ingredient was created.
+#   @return [DateTime]
+#
+# @!attribute [r] updated_at
+#   When the ingredient was last updated.
+#   @return [DateTime]
+
 class RecipeIngredient < ApplicationRecord
   belongs_to :recipe
   belongs_to :ingredient

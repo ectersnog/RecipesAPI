@@ -3,15 +3,52 @@
 module V1
   class RecipesController < ApplicationController
     def index
-      recipes = Recipes::Index.call(params:)
-      render locals: { recipes: }
+      result = Recipes::Index.call(params:)
+      if result.success?
+        render locals: { recipes: result.success }
+      else
+        render json: { errors: result.failure }
+      end
     end
 
     def show
-      recipe = Recipes::Show.call(
-        recipe: Recipe.find(params[:id])
+      result = Recipes::Show.call(params:)
+      if result.success?
+        render locals: { recipe: result.success }
+      else
+        render json: { errors: result.failure }, status: :not_found
+      end
+    end
+
+    def create
+      result = Recipes::Create.call(
+        current_user:,
+        params: create_params
       )
-      render locals: { recipe: }
+      if result.success?
+        render 'show', locals: { recipe: result.success }
+      else
+        render json: { errors: result.failure }, status: :unprocessable_entity
+      end
+    end
+
+    private
+
+    def create_params
+      params.expect(data: [
+        :name,
+        :nutritional_info,
+        :description,
+        :is_gluten_free,
+        :is_carb_free,
+        :is_kosher,
+        :is_paleo,
+        :is_vegetarian,
+        :is_vegan,
+        :cover_photo,
+        { ingredients: [] }, # linter was failing
+        { steps: [] } # linter was failing
+      ])
     end
   end
 end

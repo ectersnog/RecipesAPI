@@ -51,3 +51,5 @@ group :test do
   gem "simplecov", require: false
   gem "webmock"
 end
+
+gem "jwt", "~> 2.10"

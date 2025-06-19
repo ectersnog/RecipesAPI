@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   namespace :v1 do
     resources :categories, defaults: { format: :json }
     resources :recipes, defaults: { format: :json }
+    resources :users, defaults: { format: :json }
+    resources :tokens, defaults: { format: :json }, only: [:create]
+    get "/profile/me", to: "profiles#show", defaults: { format: :json }
   end
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'

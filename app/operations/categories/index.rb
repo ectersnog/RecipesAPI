@@ -2,13 +2,24 @@
 
 module Categories
   class Index < ApplicationOperation
-    def initialize(params:)
-      @page = params[:page].to_i
-      @per_page = params[:per_page].to_i unless params[:per_page].nil?
+    # Gets Categories from Database
+    #
+    # @param params [Hash]
+    # @option params [Integer] :page The page of results to return
+    # @option params [Integer] :per_page The number of elements to return on the page
+    # @return [Dry::Monad::Result::Success<ActiveRecord::Relation<Category>>]
+    def call(params:)
+      step get_index(params:)
     end
 
-    def call
-      Category.order(:name).page(@page).per(@per_page)
+    private
+
+    def get_index(params:)
+      categories = Category.order(:name)
+        .page(params[:page])
+        .per(params[:per_page])
+
+      Success(categories)
     end
   end
 end

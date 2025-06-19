@@ -33,3 +33,7 @@
 /.idea
 /coverage
 /public/dev
+
+# Ignore Yardoc files
+.yardoc/
+doc/
