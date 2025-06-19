@@ -10,12 +10,16 @@ module Tokens
     #
     # @return [Dry::Monads::Result::Success<JWT>, Dry::Monads::Result::Failure]
     def call(params:)
-      user = User.find_by(email: params[:email])
-      password = params[:password]
-      check_auth_and_user(user:, password:)
+      user = step get_user(params:)
+      check_auth_and_user(user:, password: params[:password])
     end
 
     private
+
+    def get_user(params:)
+      user = User.find_by(email: params[:email])
+      Success(user)
+    end
 
     def check_auth_and_user(user:, password:)
       if user && user.authenticate(password)
