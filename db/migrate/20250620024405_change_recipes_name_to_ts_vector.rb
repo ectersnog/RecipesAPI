@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # frozen_string_literal: true
 
 class ChangeRecipesNameToTsVector < ActiveRecord::Migration[8.0]
