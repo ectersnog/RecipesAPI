@@ -11,7 +11,7 @@ module Tokens
     # @return [Dry::Monads::Result::Success<JWT>, Dry::Monads::Result::Failure]
     def call(params:)
       user = step get_user(params:)
-      check_auth_and_user(user:, password: params[:password])
+      step check_auth_and_user(user:, password: params[:password])
     end
 
     private
