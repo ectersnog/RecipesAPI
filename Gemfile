@@ -16,7 +16,7 @@ gem "jbuilder", "~> 2.13"
 gem "jsonb_accessor"
 gem "kaminari"
 gem "marcel"
-gem "ostruct", "~> 0.6.1"
+gem "ostruct", "~> 0.6.2"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem "rack-cors"
@@ -52,4 +52,4 @@ group :test do
   gem "webmock"
 end
 
-gem "jwt", "~> 2.10"
+gem "jwt", "~> 3.0"
