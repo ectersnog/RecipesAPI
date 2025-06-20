@@ -82,9 +82,9 @@ class Recipe < ApplicationRecord
   has_many :recipe_images,
     dependent: :destroy
 
-  scope :search, ->(query) do
+  scope :search, lambda { |query|
     where("to_tsvector('english', coalesce(name, '')) @@ websearch_to_tsquery('english', ?)", query)
-  end
+  }
 
   validates :name,
     length: { maximum: 100 },
