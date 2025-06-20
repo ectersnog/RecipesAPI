@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # frozen_string_literal: true
 
 class ChangeRecipesNameToTsVector < ActiveRecord::Migration[8.0]
@@ -18,6 +19,7 @@ class ChangeRecipesNameToTsVector < ActiveRecord::Migration[8.0]
       t.add :name, :string
       t.remove :name_tsv
     end
+
     # Data restoration is not possible here
     remove_column :recipes, :name_tsv
   end
