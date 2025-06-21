@@ -33,5 +33,4 @@ class RecipeQueryAdvanced
 
     scope
   end
-
 end

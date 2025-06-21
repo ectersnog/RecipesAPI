@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_20_024405) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_21_004213) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -78,6 +78,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_20_024405) do
   end
 
   create_table "recipes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
     t.uuid "user_id", null: false
     t.json "nutritional_info", default: {}
     t.text "description"
@@ -92,9 +93,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_20_024405) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "cover_photo_data"
-    t.tsvector "name"
-    t.index ["name"], name: "index_recipes_on_name", using: :gin
+    t.tsvector "tsvector_name"
     t.index ["slug"], name: "index_recipes_on_slug", unique: true
+    t.index ["tsvector_name"], name: "index_recipes_on_tsvector_name", using: :gin
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

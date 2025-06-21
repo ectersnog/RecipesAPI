@@ -68,6 +68,8 @@ class Recipe < ApplicationRecord
   include ImageUploader::Attachment.new(:cover_photo)
   extend FriendlyId
 
+  before_save :update_tsvector
+
   friendly_id :name, use: :slugged
 
   belongs_to :user
@@ -92,4 +94,16 @@ class Recipe < ApplicationRecord
   validates :is_gluten_free, :is_carb_free, :is_kosher,
     :is_paleo, :is_vegetarian, :is_vegan,
     inclusion: { in: [true, false] }
+
+  private
+
+  def update_tsvector
+    result = self.class.connection.select_value(
+      "SELECT to_tsvector('english', #{self.class.connection.quote(name)})"
+    )
+    self.tsvector_name = result
+  rescue StandardError => e
+    Rails.logger.error("Failed to update tsvector for recipe #{id}: #{e.message}")
+    self.tsvector = nil
+  end
 end
