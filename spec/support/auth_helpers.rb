@@ -5,7 +5,7 @@ module AuthHelpers
 
   def login_token
     token = JwtLib.token_encode(current_user)
-    { Authorization: "Bearer #{token}" }
+    "Bearer #{token}"
   end
 
   def current_user
