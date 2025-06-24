@@ -14,7 +14,8 @@ class RecipeQueryAdvanced
     @q = params[:q] if params.key?(:q)
     @user_id = params[:user_id] if params.key?(:user_id)
     @categories = params[:categories].flatten.compact if params.key?(:categories)
-    @ingredients = params[:ingredients].flatten.compact if params.key?(:ingredients)
+    @required_ingredients = params[:required_ingredients].flatten.compact if params.key?(:required_ingredients)
+    @excluded_ingredients = params[:excluded_ingredients].flatten.compact if params.key?(:excluded_ingredients)
     BOOL_FILTERS.each do |filter|
       next unless params.key?(filter)
 
@@ -29,7 +30,8 @@ class RecipeQueryAdvanced
     scope = q
     scope = user_id(scope) if @user_id.present?
     scope = categories(scope) if @categories.present?
-    scope = ingredients(scope) if @ingredients.present?
+    scope = required_ingredients(scope) if @required_ingredients.present?
+    scope = excluded_ingredients(scope) if @excluded_ingredients.present?
     scope = gluten_free?(scope) if @is_gluten_free.present?
     scope = carb_free?(scope) if @is_carb_free.present?
     scope = kosher?(scope) if @is_kosher.present?
@@ -58,9 +60,14 @@ class RecipeQueryAdvanced
     scope.joins(:recipe_categories).where(recipe_categories: { category_id: category_ids })
   end
 
-  def ingredients(scope)
-    ingredient_ids = Ingredient.where(name: @ingredients).pluck(:id)
+  def required_ingredients(scope)
+    ingredient_ids = Ingredient.where(name: @required_ingredients).pluck(:id)
     scope.joins(:recipe_ingredients).where(recipe_ingredients: { ingredient_id: ingredient_ids })
+  end
+
+  def excluded_ingredients(scope)
+    ingredient_ids = Ingredient.where(name: @excluded_ingredients).pluck(:id)
+    scope.where.not(id: Recipe.joins(:recipe_ingredients).where(recipe_ingredients: { ingredient_id: ingredient_ids }))
   end
 
   def gluten_free?(scope)
