@@ -52,4 +52,4 @@ group :test do
   gem "webmock"
 end
 
-gem "jwt", "~> 3.0"
+gem "jwt", "~> 3.1"
