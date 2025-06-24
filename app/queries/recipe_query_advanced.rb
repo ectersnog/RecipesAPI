@@ -1,36 +1,89 @@
 # frozen_string_literal: true
 
 class RecipeQueryAdvanced
-  BOOLEAN_FILTERS = %i[
+  BOOL_FILTERS = %i[
     is_gluten_free
     is_carb_free
     is_kosher
     is_paleo
     is_vegetarian
     is_vegan
-  ].freeze
+    ].freeze
 
   def initialize(params:)
     @q = params[:q] if params.key?(:q)
     @user_id = params[:user_id] if params.key?(:user_id)
-    @category_id = params[:category_id] if params.key?(:category_id)
-    BOOLEAN_FILTERS.each do |key|
-      instance_variable_set("@#{key}", params[key]) if params.key?(key)
+    @categories = params[:categories].flatten.compact if params.key?(:categories)
+    @ingredients = params[:ingredients].flatten.compact if params.key?(:ingredients)
+    BOOL_FILTERS.each do |filter|
+      next unless params.key?(filter)
+
+      value = params[filter]
+      if value.is_a?(TrueClass) || value.is_a?(FalseClass)
+        instance_variable_set("@#{filter}", value)
+      end
     end
   end
 
-  def results
-    scope = Recipe.all
+  def call
+    scope = q
+    scope = user_id(scope) if @user_id.present?
+    scope = categories(scope) if @categories.present?
+    scope = ingredients(scope) if @ingredients.present?
+    scope = gluten_free?(scope) if @is_gluten_free.present?
+    scope = carb_free?(scope) if @is_carb_free.present?
+    scope = kosher?(scope) if @is_kosher.present?
+    scope = paleo?(scope) if @is_paleo.present?
+    scope = vegetarian?(scope) if @is_vegetarian.present?
+    scope = vegan?(scope) if @is_vegan.present?
+    scope.uniq
+  end
 
-    scope = scope.where(user_id: @user_id) unless @user_id.nil?
-    if @category_id.present?
-      scope = scope.joins(:recipe_categories).where(recipe_categories: { category_id: @category_id })
-    end
-    BOOLEAN_FILTERS.each do |key|
-      value = instance_variable_get("@#{key}")
-      scope = scope.where(key => value) unless value.nil?
-    end
+  private
 
-    scope
+  def q
+    if @q.present?
+      Recipe.search(@q)
+    else
+      Recipe.all
+    end
+  end
+
+  def user_id(scope)
+    scope.where(user_id: @user_id)
+  end
+
+  def categories(scope)
+    category_ids = Category.where(name: @categories).pluck(:id)
+    scope.joins(:recipe_categories).where(recipe_categories: { category_id: category_ids })
+  end
+
+  def ingredients(scope)
+    ingredient_ids = Ingredient.where(name: @ingredients).pluck(:id)
+    scope.joins(:recipe_ingredients).where(recipe_ingredients: { ingredient_id: ingredient_ids })
+  end
+
+  def gluten_free?(scope)
+    scope.where(is_gluten_free: @is_gluten_free)
+  end
+
+  def carb_free?(scope)
+    scope.where(is_carb_free: @is_carb_free)
+  end
+
+  def kosher?(scope)
+    scope.where(is_kosher: @is_kosher)
+  end
+
+  def paleo?(scope)
+    scope.where(is_paleo: @is_paleo)
+  end
+
+  def vegetarian?(scope)
+    scope.where(is_vegetarian: @is_vegetarian)
+  end
+
+  def vegan?(scope)
+    scope.where(is_vegan: @is_vegan)
   end
 end
