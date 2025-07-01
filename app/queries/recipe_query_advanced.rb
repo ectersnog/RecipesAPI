@@ -27,7 +27,6 @@ class RecipeQueryAdvanced
   def call(params, scope:)
     return scope if params.empty?
 
-    params = clean_params(params)
     query = []
     query += process_booleans(params)
 
@@ -45,15 +44,11 @@ class RecipeQueryAdvanced
 
     valid = query.reject { it.values.all?(&:nil?) }
 
-    result = if params[:q].present?
-      scope.includes(:recipe_categories, :recipe_ingredients).where(valid.reduce({}, :merge))
-        .search(params[:q])
-        .order(:name)
-    else
-      scope.includes(:recipe_categories, :recipe_ingredients).where(valid.reduce({}, :merge))
-        .order(:name)
-    end
+    result = scope.includes(:recipe_ingredients, :recipe_categories)
+      .where(valid.reduce({}, :merge))
+      .order(:name)
 
+    result = result.search(params[:q]) if params[:q].present?
     if params[:page] || params[:per_page]
       PAGINATE.call(result, params[:page], params[:per_page])
     else
@@ -88,25 +83,5 @@ class RecipeQueryAdvanced
     return if value.nil?
 
     ActiveModel::Type::Boolean.new.cast(value.to_s.downcase)
-  end
-
-  def clean_params(params)
-    params.slice(
-      *%i[
-        user_id
-        is_carb_free
-        is_kosher
-        is_paleo
-        is_gluten_free
-        is_vegetarian
-        is_vegan
-        required_ingredients
-        excluded_ingredients
-        categories
-        q
-        page
-        per_page
-      ]
-    )
   end
 end
