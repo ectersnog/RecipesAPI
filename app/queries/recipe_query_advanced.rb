@@ -17,9 +17,6 @@ class RecipeQueryAdvanced
   # @option params [String] :categories a comma-separated list of category IDs to filter by
   #
   # @return [ActiveRecord::Relation] the resulting scope after applying filters
-
-  PAGINATE = ->(scope, page = 1, per_page = 10) { scope.page(page).per(per_page) }
-
   def self.call(params = {}, scope: Recipe.all)
     new.call(params, scope:)
   end
@@ -50,7 +47,7 @@ class RecipeQueryAdvanced
 
     result = result.search(params[:q]) if params[:q].present?
     if params[:page] || params[:per_page]
-      PAGINATE.call(result, params[:page], params[:per_page])
+      result.page(params[:page]).per(params[:per_page])
     else
       result
     end
